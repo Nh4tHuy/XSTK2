@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>WILD WEST NỔ HŨ PRO • 3600 WAYS & JACKPOT HOÀNG KIM 3D</title>
+  <title>WILD WEST NỔ HŨ PRO • 3600 WAYS 3D</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,7 +18,7 @@
               card: '#120a05',
               woodDark: '#1a0d06',
               wood: '#2c1409',
-              woodBorder: '#6d391a',
+              woodBorder: '#783d1c',
               woodLight: '#432110',
               gold: '#ffb300',
               goldLight: '#ffe57f',
@@ -63,7 +63,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background: radial-gradient(circle at 50% 25%, #251208 0%, #060302 92%);
+      background: radial-gradient(circle at 50% 20%, #251208 0%, #060302 92%);
       color: #faebd7;
       font-family: 'Inter', sans-serif;
     }
@@ -200,7 +200,7 @@
     #gas-sync-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(8, 4, 2, 0.82);
+      background: rgba(8, 4, 2, 0.85);
       backdrop-filter: blur(6px);
       z-index: 999;
       display: flex;
@@ -252,7 +252,7 @@
         </div>
       </div>
       <div class="space-y-1">
-        <div id="sync-overlay-title" class="text-xs font-bold text-yellow-300 font-western uppercase tracking-wider">ĐANG ĐỒNG BỘ GOOGLE SHEET</div>
+        <div id="sync-overlay-title" class="text-xs font-bold text-yellow-300 font-western uppercase tracking-wider">ĐANG ĐỒNG BỘ DỮ LIỆU</div>
         <p id="sync-overlay-desc" class="text-[10px] text-stone-300">Đang đọc & xác nhận số liệu từ đám mây...</p>
       </div>
       <div class="w-full bg-black/60 h-1.5 rounded-full overflow-hidden border border-saloon-woodBorder">
@@ -280,17 +280,17 @@
 
       <div class="w-64 sm:w-72 space-y-1.5 font-mono">
         <div class="w-full h-2.5 bg-black/80 rounded-full border border-amber-600/70 p-0.5 overflow-hidden">
-          <div id="loading-bar-fill" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 rounded-full transition-all duration-150" style="width: 15%;"></div>
+          <div id="loading-bar-fill" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 rounded-full transition-all duration-150" style="width: 25%;"></div>
         </div>
         <div class="flex justify-between text-[10px] text-amber-400 font-bold px-1">
-          <span id="loading-status-text">Đang nạp icon 3D & ma trận...</span>
-          <span id="loading-percentage">15%</span>
+          <span id="loading-status-text">Đang chuẩn bị ma trận 3D...</span>
+          <span id="loading-percentage">25%</span>
         </div>
       </div>
 
       <div class="h-10 flex items-center justify-center">
         <p id="loading-tip-text" class="text-[11px] text-stone-300 italic font-mono transition-opacity duration-300">
-          "Hệ số nhân Cascade tăng gấp đôi sau mỗi lần nổ chuỗi biểu tượng!"
+          "Hệ số nhân Cascade tăng gấp đôi sau mỗi lần nổ chuỗi biểu tượng 3D!"
         </p>
       </div>
     </div>
@@ -350,19 +350,19 @@
       </button>
 
       <div id="auth-actions">
-        <button id="btn-open-auth" class="h-6 sm:h-8 px-2 sm:px-3 rounded-lg bg-gradient-to-r from-amber-400 to-yellow-300 hover:from-amber-300 text-black font-extrabold text-[9px] sm:text-xs flex items-center space-x-1 shadow transition active:scale-95">
-          <i class="fa-solid fa-user-check text-[8px]"></i>
-          <span>Tài Khoản</span>
+        <button id="btn-open-auth" class="h-6 sm:h-8 px-2.5 sm:px-3 rounded-lg bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 text-black font-extrabold text-[9px] sm:text-xs flex items-center space-x-1.5 shadow transition active:scale-95 animate-pulse">
+          <i class="fa-solid fa-right-to-bracket text-[9px]"></i>
+          <span>Đăng Nhập</span>
         </button>
 
         <div id="user-logged-box" class="hidden items-center space-x-1">
           <div class="h-6 sm:h-8 px-2 rounded-lg bg-saloon-woodLight/90 border border-saloon-woodBorder flex items-center space-x-1.5 text-[9px] sm:text-xs font-mono shadow">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="user-name-tag" class="font-bold text-stone-100 max-w-[60px] sm:max-w-[100px] truncate">Khách VIP</span>
-            <span id="user-role-badge" class="text-[7.5px] px-1 rounded bg-amber-400/20 text-amber-300 font-bold">VIP</span>
+            <span id="user-name-tag" class="font-bold text-stone-100 max-w-[60px] sm:max-w-[100px] truncate">Player</span>
+            <span id="user-role-badge" class="text-[7.5px] px-1 rounded bg-amber-400/20 text-amber-300 font-bold">USER</span>
           </div>
-          <button id="btn-logout" title="Đổi tài khoản" class="h-6 w-6 sm:h-8 sm:w-8 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-300 hover:bg-rose-900 flex items-center justify-center text-[10px] sm:text-xs transition shadow active:scale-95">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <button id="btn-logout" title="Đăng xuất" class="h-6 w-6 sm:h-8 sm:w-8 rounded-lg bg-rose-950/70 border border-rose-800 text-rose-300 hover:bg-rose-900 flex items-center justify-center text-[10px] sm:text-xs transition shadow active:scale-95">
+            <i class="fa-solid fa-power-off"></i>
           </button>
         </div>
       </div>
@@ -387,7 +387,6 @@
     </div>
   </div>
 
-  <!-- Main Content Layout -->
   <main class="relative z-10 flex-1 flex flex-col justify-between p-1 sm:p-2 max-w-6xl mx-auto w-full min-h-0 overflow-hidden gap-1 sm:gap-1.5">
 
     <div class="hidden sm:flex w-full flex-shrink-0 bg-saloon-dark/90 border border-saloon-woodBorder rounded-lg px-2 sm:px-3 py-1 shadow items-center justify-between text-[9px] sm:text-[10px] font-mono overflow-hidden">
@@ -396,7 +395,7 @@
         <span class="font-bold uppercase tracking-wider text-[8px] sm:text-[9px]">LIVE TIN THẮNG:</span>
       </div>
       <div id="live-winner-ticker" class="truncate flex-1 px-2 text-stone-300 text-right">
-        Chào mừng bạn đến với Nổ Hũ 3D Viễn Tây! Đã cấp sẵn 10.000.000 ₫ để bạn trải nghiệm ngay.
+        Chào mừng đến với Nổ Hũ 3D Viễn Tây! Vui lòng ĐĂNG NHẬP để nhận 10.000.000 ₫ và bắt đầu quay thưởng!
       </div>
     </div>
 
@@ -447,6 +446,23 @@
               <p id="bonus-desc" class="text-xs text-stone-200 mb-3 font-mono">Nhận ngay 10 lượt quay miễn phí với chuỗi nổ Cascade x32!</p>
               <button id="btn-start-bonus" class="px-6 py-2 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-xs uppercase tracking-wider shadow-2xl active:scale-95 transition">
                 BẮT ĐẦU NGAY
+              </button>
+            </div>
+
+            <!-- KHÓA YÊU CẦU ĐĂNG NHẬP TRƯỚC KHI QUAY (THEO YÊU CẦU) -->
+            <div id="guest-lock-overlay" class="absolute inset-0 bg-black/85 backdrop-blur-md z-40 flex flex-col items-center justify-center p-4 text-center space-y-3">
+              <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600 text-black flex items-center justify-center text-2xl sm:text-3xl font-black shadow-2xl animate-bounce">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <div class="space-y-1 font-mono max-w-sm">
+                <h3 class="text-base sm:text-lg font-black text-yellow-300 font-western uppercase tracking-wider">YÊU CẦU ĐĂNG NHẬP</h3>
+                <p class="text-xs text-stone-300 leading-relaxed">
+                  Vui lòng đăng nhập tài khoản để nhận <b class="text-emerald-400 font-bold">+10.000.000 ₫</b> vốn khởi nghiệp và mở khóa ma trận quay thưởng 3D!
+                </p>
+              </div>
+              <button id="btn-lock-login-action" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-xs uppercase tracking-wider shadow-xl active:scale-95 transition flex items-center space-x-2">
+                <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                <span>ĐĂNG NHẬP / ĐĂNG KÝ NGAY</span>
               </button>
             </div>
 
@@ -513,7 +529,7 @@
     <div class="w-full grid grid-cols-3 gap-1 sm:gap-1.5 text-center font-mono text-xs flex-shrink-0">
       <div class="bg-saloon-dark/95 border border-saloon-woodBorder rounded-lg py-1 px-1 shadow">
         <span class="block text-[7px] sm:text-[8px] text-stone-400 uppercase font-sans leading-tight">SỐ DƯ VÍ</span>
-        <span id="player-balance-display" class="font-bold text-saloon-gold text-[11px] sm:text-sm whitespace-nowrap leading-tight">10.000.000 ₫</span>
+        <span id="player-balance-display" class="font-bold text-saloon-gold text-[11px] sm:text-sm whitespace-nowrap leading-tight">0 ₫</span>
       </div>
 
       <div class="bg-saloon-dark/95 border border-saloon-woodBorder rounded-lg py-1 px-1 shadow">
@@ -558,8 +574,6 @@
     </div>
 
   </main>
-
-  <!-- ==================== MODALS & POPUPS ==================== -->
 
   <!-- MODAL CẤU HÌNH LIÊN KẾT GOOGLE APPS SCRIPT WEB APP -->
   <div id="gas-config-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[80] flex items-center justify-center p-3 hidden">
@@ -669,11 +683,14 @@
     </div>
   </div>
 
-  <!-- AUTH MODAL -->
-  <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
-    <div class="bg-saloon-dark border border-saloon-woodBorder w-full max-w-sm rounded-2xl p-4 shadow-2xl space-y-3">
+  <!-- AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-saloon-dark border-2 border-amber-400/80 w-full max-w-sm rounded-2xl p-4 shadow-2xl space-y-3">
       <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
-        <h3 class="text-sm font-bold text-amber-300 font-western">TÀI KHOẢN CAO BỒI</h3>
+        <h3 class="text-sm font-bold text-amber-300 font-western flex items-center space-x-1.5">
+          <i class="fa-solid fa-hat-cowboy text-amber-400"></i>
+          <span>TÀI KHOẢN CAO BỒI</span>
+        </h3>
         <button id="btn-close-auth" class="text-stone-400 hover:text-white p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
@@ -684,19 +701,16 @@
       </div>
       <form id="auth-form" class="space-y-3 text-xs" onsubmit="return false;">
         <div>
-          <label class="text-stone-400 block mb-1">Tên tài khoản</label>
-          <input type="text" id="auth-username" required placeholder="admin hoặc tự đặt tên mới" class="w-full bg-black/60 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
+          <label class="text-stone-300 block mb-1">Tên tài khoản</label>
+          <input type="text" id="auth-username" required placeholder="Nhập tài khoản (hoặc 'admin', 'player')" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
         </div>
         <div>
-          <label class="text-stone-400 block mb-1">Mật khẩu</label>
-          <input type="password" id="auth-password" required placeholder="Nhập mật khẩu (admin: admin123)" class="w-full bg-black/60 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
+          <label class="text-stone-300 block mb-1">Mật khẩu</label>
+          <input type="password" id="auth-password" required placeholder="Nhập mật khẩu (admin: admin123)" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
         </div>
-        <div class="flex space-x-2">
-          <button type="submit" id="btn-submit-auth" class="flex-1 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs shadow-lg transition active:scale-95">
-            XÁC NHẬN
-          </button>
-          <button type="button" id="btn-quick-guest" class="px-3 py-2.5 rounded-xl bg-saloon-woodLight border border-saloon-woodBorder text-amber-300 font-bold text-xs shadow transition active:scale-95">
-            Chơi Thử VIP
+        <div class="flex space-x-2 pt-1">
+          <button type="submit" id="btn-submit-auth" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 text-black font-black text-xs shadow-lg transition active:scale-95">
+            XÁC NHẬN TIẾP TỤC
           </button>
         </div>
       </form>
@@ -737,7 +751,7 @@
     </div>
   </div>
 
-  <!-- ==================== BẢNG QUẢN TRỊ ADMIN ==================== -->
+  <!-- BẢNG QUẢN TRỊ ADMIN -->
   <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-saloon-dark border border-saloon-woodBorder w-full max-w-lg rounded-2xl p-4 shadow-2xl space-y-3 max-h-[92vh] overflow-y-auto custom-scroll">
       
@@ -997,9 +1011,6 @@
   <!-- Toast Notification Container -->
   <div id="toast-container" class="fixed bottom-3 right-3 z-50 flex flex-col space-y-1.5 pointer-events-none"></div>
 
-  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
-
-  <!-- SYMBOLS & 3D ICON RENDERER DEFINITIONS -->
   <script>
     const SYMBOLS = [
       {
@@ -1025,20 +1036,13 @@
               </filter>
             </defs>
             <g filter="url(#cb3DShadow)">
-              <!-- Vành mũ 3D cong bổng -->
               <ellipse cx="50" cy="68" rx="46" ry="16" fill="url(#cbHatGlow)" stroke="url(#cbGoldBrim)" stroke-width="2.5"/>
               <ellipse cx="50" cy="65" rx="38" ry="11" fill="#3c1a05" opacity="0.6"/>
-              
-              <!-- Chóp mũ da 3D có nếp gấp -->
               <path d="M26 62 C25 35, 34 18, 43 16 C48 15, 52 15, 57 16 C66 18, 75 35, 74 62 Z" fill="url(#cbHatGlow)" stroke="#f59e0b" stroke-width="1.5"/>
               <path d="M42 16 C47 25, 53 25, 58 16" stroke="#230d02" stroke-width="3" stroke-linecap="round"/>
               <path d="M30 48 C42 42, 58 42, 70 48" stroke="#ffffff" stroke-width="1.2" opacity="0.25" stroke-linecap="round"/>
-
-              <!-- Đai mũ da nạm vàng & sao 3D -->
               <path d="M26 58 C35 52, 65 52, 74 58 L74 63 C65 57, 35 57, 26 63 Z" fill="#881337" stroke="url(#cbGoldBrim)" stroke-width="1"/>
               <circle cx="50" cy="59.5" r="4.5" fill="url(#cbGoldBrim)" stroke="#fff" stroke-width="1"/>
-              
-              <!-- Cặp súng bạc đan chéo dưới mũ -->
               <path d="M38 74 L25 86 M38 86 L25 74" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/>
               <circle cx="50" cy="76" r="3" fill="#ffd700"/>
             </g>
@@ -1066,24 +1070,17 @@
               </linearGradient>
             </defs>
             <g>
-              <!-- Nòng súng thép bóng -->
               <rect x="12" y="36" width="46" height="15" rx="3" fill="url(#metal3D)" stroke="#334155" stroke-width="1.5"/>
               <rect x="10" y="33" width="8" height="6" rx="1.5" fill="url(#gunGold)"/>
               <line x1="16" y1="41" x2="52" y2="41" stroke="#f8fafc" stroke-width="1.8" stroke-linecap="round"/>
-
-              <!-- Ổ đạn xoay mạ vàng 3D -->
               <rect x="52" y="32" width="22" height="23" rx="4" fill="url(#gunGold)" stroke="#78350f" stroke-width="2"/>
               <ellipse cx="63" cy="43.5" rx="4" ry="4" fill="#312e81" stroke="#fff" stroke-width="1"/>
               <ellipse cx="56" cy="38" rx="2" ry="2" fill="#451a03"/>
               <ellipse cx="70" cy="38" rx="2" ry="2" fill="#451a03"/>
               <ellipse cx="56" cy="49" rx="2" ry="2" fill="#451a03"/>
               <ellipse cx="70" cy="49" rx="2" ry="2" fill="#451a03"/>
-
-              <!-- Báng súng gỗ gụ chạm hoa văn 3D -->
               <path d="M68 50 L84 76 C86 82, 80 88, 73 88 L62 88 C58 84, 60 74, 60 66 Z" fill="url(#cbHatGlow)" stroke="url(#gunGold)" stroke-width="2"/>
               <circle cx="72" cy="78" r="3.5" fill="url(#gunGold)"/>
-              
-              <!-- Vòng cò & Cò súng -->
               <path d="M52 52 C50 64, 62 64, 62 54" stroke="url(#metal3D)" stroke-width="3" fill="none"/>
               <path d="M56 54 L58 58" stroke="#f59e0b" stroke-width="3"/>
             </g>
@@ -1111,18 +1108,11 @@
               </linearGradient>
             </defs>
             <g>
-              <!-- Nút bấc & Cổ chai rượu 3D -->
               <rect x="42" y="8" width="16" height="12" rx="3" fill="url(#cork3D)" stroke="#451a03" stroke-width="1.5"/>
               <path d="M38 20 L62 20 L58 35 L42 35 Z" fill="url(#whiskeyGlass)" stroke="#ffd700" stroke-width="1.5"/>
-              
-              <!-- Thân chai thủy tinh vát cạnh 3D hổ phách -->
               <path d="M28 36 C28 33, 72 33, 72 36 L78 82 C78 88, 72 90, 66 90 L34 90 C28 90, 22 88, 22 82 Z" fill="url(#whiskeyGlass)" stroke="#fef08a" stroke-width="2"/>
-              
-              <!-- Vệt phản quang thủy tinh dọc thân -->
               <path d="M27 38 L30 84" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
               <path d="M34 40 L36 82" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
-
-              <!-- Nhãn hiệu Da Cừu Hoàng Gia XXX -->
               <rect x="32" y="48" width="36" height="24" rx="4" fill="#1c1917" stroke="#fbbf24" stroke-width="1.8"/>
               <text x="50" y="64" font-size="12" font-weight="900" fill="#fbbf24" font-family="Cinzel" text-anchor="middle" letter-spacing="2">XXX</text>
               <text x="50" y="70" font-size="5" font-weight="700" fill="#e2e8f0" font-family="Inter" text-anchor="middle">SALOON 1888</text>
@@ -1146,22 +1136,14 @@
               </linearGradient>
             </defs>
             <g>
-              <!-- Thân móng ngựa 3D uốn lượn bề thế -->
               <path d="M24 16 L38 16 C34 35, 34 60, 50 68 C66 60, 66 35, 62 16 L76 16 C82 45, 78 78, 50 88 C22 78, 18 45, 24 16 Z" fill="url(#hsGoldGrad)" stroke="#fff" stroke-width="1.5"/>
-              
-              <!-- Viền vát nổi 3D (Bevel layer) -->
               <path d="M27 20 L35 20 C32 38, 35 58, 50 64 C65 58, 68 38, 65 20 L73 20" stroke="#fef08a" stroke-width="2" fill="none"/>
-
-              <!-- Các lỗ đinh nạm kim cương ngọc bích -->
               <circle cx="28" cy="30" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
               <circle cx="27" cy="46" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
               <circle cx="32" cy="62" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
-              
               <circle cx="72" cy="30" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
               <circle cx="73" cy="46" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
               <circle cx="68" cy="62" r="3" fill="#0284c7" stroke="#fff" stroke-width="1"/>
-              
-              <!-- Ngôi sao may mắn ở tâm đỉnh -->
               <circle cx="50" cy="76" r="4.5" fill="#e11d48" stroke="#ffd700" stroke-width="1"/>
             </g>
           </svg>
@@ -1189,7 +1171,6 @@
             <g>
               <rect x="14" y="12" width="72" height="76" rx="18" fill="url(#bgAce)" stroke="url(#goldEdge)" stroke-width="4"/>
               <rect x="18" y="16" width="64" height="68" rx="14" stroke="#ffffff" stroke-width="1.2" opacity="0.4"/>
-              <!-- Chữ A 3D dập nổi phát sáng -->
               <text x="50" y="65" font-size="52" font-weight="900" fill="#ffffff" font-family="Cinzel" text-anchor="middle" filter="drop-shadow(0 4px 6px #000)">A</text>
               <polygon points="50,22 53,28 60,29 55,34 56,40 50,37 44,40 45,34 40,29 47,28" fill="#ffd700"/>
             </g>
@@ -1214,7 +1195,6 @@
               <rect x="14" y="12" width="72" height="76" rx="18" fill="url(#bgKing)" stroke="url(#goldEdge)" stroke-width="4"/>
               <rect x="18" y="16" width="64" height="68" rx="14" stroke="#ffffff" stroke-width="1.2" opacity="0.4"/>
               <text x="50" y="65" font-size="52" font-weight="900" fill="#ffffff" font-family="Cinzel" text-anchor="middle" filter="drop-shadow(0 4px 6px #000)">K</text>
-              <!-- Vương miện trên đỉnh -->
               <path d="M42 28 L46 22 L50 26 L54 22 L58 28 Z" fill="#ffd700" stroke="#b45309" stroke-width="1"/>
             </g>
           </svg>
@@ -1291,17 +1271,12 @@
               </filter>
             </defs>
             <g filter="url(#wildGlow3D)">
-              <!-- Ngôi sao cảnh trưởng đa giác vát 3D -->
               <polygon points="50,4 62,32 94,33 68,52 78,82 50,64 22,82 32,52 6,33 38,32" fill="url(#wildGold3D)" stroke="#ffffff" stroke-width="2"/>
-              
-              <!-- Vòng bi tròn ở đầu các đỉnh sao -->
               <circle cx="50" cy="5" r="3.5" fill="#fff" stroke="#ca8a04" stroke-width="1"/>
               <circle cx="93" cy="33" r="3.5" fill="#fff" stroke="#ca8a04" stroke-width="1"/>
               <circle cx="77" cy="81" r="3.5" fill="#fff" stroke="#ca8a04" stroke-width="1"/>
               <circle cx="23" cy="81" r="3.5" fill="#fff" stroke="#ca8a04" stroke-width="1"/>
               <circle cx="7" cy="33" r="3.5" fill="#fff" stroke="#ca8a04" stroke-width="1"/>
-
-              <!-- Bảng nẹp WILD đỏ ruby 3D nổi bật -->
               <rect x="18" y="60" width="64" height="24" rx="6" fill="url(#rubyGem)" stroke="#fef08a" stroke-width="2"/>
               <rect x="20" y="62" width="60" height="20" rx="4" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
               <text x="50" y="77" font-size="14" font-weight="900" fill="#ffffff" font-family="Cinzel" text-anchor="middle" letter-spacing="2">WILD</text>
@@ -1333,23 +1308,16 @@
               </filter>
             </defs>
             <g filter="url(#scatterGlow)">
-              <!-- Thỏi vàng tầng dưới bên trái -->
               <polygon points="12,52 38,36 64,36 38,52" fill="url(#goldBarTop)" stroke="#fff" stroke-width="1"/>
               <polygon points="12,52 38,52 38,66 12,66" fill="url(#goldBarSide)" stroke="#ca8a04" stroke-width="1"/>
               <polygon points="38,52 64,36 64,50 38,66" fill="#a16207"/>
-
-              <!-- Thỏi vàng tầng dưới bên phải -->
               <polygon points="36,46 62,30 88,30 62,46" fill="url(#goldBarTop)" stroke="#fff" stroke-width="1"/>
               <polygon points="36,46 62,46 62,60 36,60" fill="url(#goldBarSide)" stroke="#ca8a04" stroke-width="1"/>
               <polygon points="62,46 88,30 88,44 62,60" fill="#a16207"/>
-
-              <!-- Thỏi vàng chính giữa tầng trên đỉnh 3D -->
               <polygon points="24,34 50,18 76,18 50,34" fill="url(#goldBarTop)" stroke="#ffffff" stroke-width="1.2"/>
               <polygon points="24,34 50,34 50,50 24,50" fill="url(#goldBarSide)" stroke="#ca8a04" stroke-width="1"/>
               <polygon points="50,34 76,18 76,34 50,50" fill="#a16207"/>
               <text x="50" y="28" font-size="8" font-weight="900" fill="#713f12" font-family="Cinzel" text-anchor="middle">999.9</text>
-
-              <!-- Banner SCATTER tím hoàng gia -->
               <rect x="10" y="66" width="80" height="22" rx="6" fill="#4c1d95" stroke="#fef08a" stroke-width="2"/>
               <text x="50" y="82" font-size="11" font-weight="900" fill="#fef08a" font-family="Cinzel" text-anchor="middle" letter-spacing="1.5">SCATTER</text>
             </g>
@@ -1359,7 +1327,6 @@
     ];
   </script>
 
-  <!-- WEB AUDIO & THREE.JS 3D -->
   <script>
     function formatVND(value) {
       return new Intl.NumberFormat('vi-VN', {
@@ -1420,9 +1387,7 @@
           osc.start(now);
           osc.stop(now + 0.9);
         }
-      } catch (e) {
-        // Sound fallback without break
-      }
+      } catch (e) {}
     }
 
     let threeScene, threeCamera, threeRenderer, threeDustParticles;
@@ -1475,7 +1440,7 @@
 
         animateThreeLoop();
       } catch (err) {
-        console.warn("Three.js canvas safely disabled:", err);
+        console.warn("Three.js canvas fallback:", err);
       }
     }
 
@@ -1532,8 +1497,32 @@
     }
   </script>
 
-  <!-- ENGINE STATE & SECRET PSYCHOLOGICAL TRAP -->
   <script>
+    // Bộ lưu trữ SafeStorage chống lỗi iFrame Sandbox
+    const safeStore = {
+      getItem(key) {
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return window['__mem_' + key] || null;
+        }
+      },
+      setItem(key, val) {
+        try {
+          localStorage.setItem(key, val);
+        } catch (e) {
+          window['__mem_' + key] = val;
+        }
+      },
+      removeItem(key) {
+        try {
+          localStorage.removeItem(key);
+        } catch (e) {
+          delete window['__mem_' + key];
+        }
+      }
+    };
+
     const COLS = 5;
     const ROWS = 4;
     let grid = [];
@@ -1544,7 +1533,7 @@
     const BET_LEVELS = [5000, 10000, 20000, 50000, 100000, 200000, 500000];
     let currentBetIndex = 2; // 20.000 VND
 
-    let balance = 10000000; // Khởi tạo sẵn 10.000.000 ₫ cho người chơi trải nghiệm ngay
+    let balance = 0;
     let currentSpinWin = 0;
     let totalSessionWin = 0;
 
@@ -1554,8 +1543,8 @@
 
     // Config Tỉ lệ từ Admin
     let jackpotPool = 50000000;
-    let serverJackpotRate = 0.2; // 0.2% tỉ lệ nổ hũ server
-    let globalWinRate = 45;       // 45% tỉ lệ thắng chung
+    let serverJackpotRate = 0.2; // 0.2%
+    let globalWinRate = 45;       // 45%
     let forceJackpotNextSpin = false;
 
     // THUẬT TOÁN BẪY TÂM LÝ & THU HỒI VỐN TOÀN SERVER (AUTO-DRAIN)
@@ -1564,29 +1553,23 @@
     let forceTrapDrainServer = false;
     let trapConfig = {
       enabled: true,
-      baitRounds: 8,        // 8 vòng đầu cho nổ lớn kích thích
-      drainSeverity: 'hard' // 'mild' (25%), 'hard' (8%), 'brutal' (2%)
+      baitRounds: 8,
+      drainSeverity: 'hard'
     };
 
     // Google Apps Script API URL
-    let GAS_APP_URL = localStorage.getItem('nh_gas_api_url') || "";
+    let GAS_APP_URL = safeStore.getItem('nh_gas_api_url') || "";
 
     // Local Users Database Fallback
     const localUsersDb = {
       'admin': { password: 'admin123', role: 'admin', balance: 50000000, winRate: 100 },
-      'khachvip': { password: '123', role: 'user', balance: 10000000, winRate: 50 },
+      'player': { password: '123', role: 'user', balance: 10000000, winRate: 50 },
       'daigia71': { password: '123', role: 'user', balance: 18500000, winRate: 55 },
       'hoangtutrade': { password: '123', role: 'user', balance: 12450000, winRate: 45 }
     };
 
-    // Khởi tạo phiên người dùng mặc định ngay lập tức để KHÔNG BỊ KHÓA WEB
-    let currentUser = {
-      username: 'KhachVIP',
-      role: 'user',
-      balance: 10000000,
-      winRate: 50,
-      token: 'guest_token'
-    };
+    // BẮT BUỘC ĐĂNG NHẬP: currentUser ban đầu là null
+    let currentUser = null;
 
     let leaderboard = [
       { name: 'daigia71', won: 48500000 },
@@ -1615,41 +1598,19 @@
     const redeemedCodes = [];
 
     // MÀN HÌNH LOADING ENGINE
-    const LOADING_TIPS = [
-      "Hệ số nhân Cascade tăng gấp đôi sau mỗi lần nổ chuỗi biểu tượng 3D!",
-      "Thu thập đủ 3 biểu tượng Thỏi Vàng SCATTER để mở khóa 10 Free Spins!",
-      "Biểu tượng WILD Sao Vàng thay thế cho mọi biểu tượng khác!",
-      "Hũ Hoàng Kim 3D tích lũy 5% giá trị từ mỗi lượt quay trên toàn server!",
-      "Hãy kiên nhẫn, vận may Viễn Tây 3D luôn mỉm cười với cao bồi dũng cảm!"
-    ];
-
     function startLoadingSequence() {
       const fill = document.getElementById('loading-bar-fill');
       const percentLabel = document.getElementById('loading-percentage');
       const statusLabel = document.getElementById('loading-status-text');
-      const tipLabel = document.getElementById('loading-tip-text');
       const screen = document.getElementById('loading-screen');
 
-      let currentPercent = 15;
-      let tipIndex = 0;
-
-      const tipInterval = setInterval(() => {
-        tipIndex = (tipIndex + 1) % LOADING_TIPS.length;
-        if (tipLabel) {
-          tipLabel.style.opacity = '0';
-          setTimeout(() => {
-            tipLabel.textContent = `"${LOADING_TIPS[tipIndex]}"`;
-            tipLabel.style.opacity = '1';
-          }, 200);
-        }
-      }, 1200);
+      let currentPercent = 25;
 
       const progressInterval = setInterval(() => {
-        currentPercent += Math.floor(Math.random() * 20) + 15;
+        currentPercent += Math.floor(Math.random() * 25) + 20;
         if (currentPercent >= 100) {
           currentPercent = 100;
           clearInterval(progressInterval);
-          clearInterval(tipInterval);
 
           if (fill) fill.style.width = '100%';
           if (percentLabel) percentLabel.textContent = '100%';
@@ -1658,9 +1619,9 @@
           setTimeout(() => {
             if (screen) {
               screen.style.opacity = '0';
-              setTimeout(() => screen.style.display = 'none', 400);
+              setTimeout(() => { screen.style.display = 'none'; }, 400);
             }
-          }, 250);
+          }, 200);
         } else {
           if (fill) fill.style.width = `${currentPercent}%`;
           if (percentLabel) percentLabel.textContent = `${currentPercent}%`;
@@ -1668,31 +1629,35 @@
             statusLabel.textContent = 'Khởi tạo ma trận 3D 3600 Ways...';
           }
         }
-      }, 80);
+      }, 70);
+
+      // Cưỡng chế đóng loading sau 1.2s tránh treo
+      setTimeout(() => {
+        if (screen && screen.style.display !== 'none') {
+          screen.style.opacity = '0';
+          setTimeout(() => { screen.style.display = 'none'; }, 300);
+        }
+      }, 1200);
     }
 
     // TÍNH TOÁN TỈ LỆ THẮNG HIỆN TẠI (Áp dụng Bẫy Thu Hồi Vốn Toàn Server)
     function calculateEffectiveWinRate() {
       let baseRate = globalWinRate;
 
-      // Admin luôn luôn có win rate cao
       if (currentUser && currentUser.role === 'admin') {
         return 100;
       }
 
-      // Lệnh ép dìm vốn toàn server
       if (forceTrapDrainServer) {
         updateTrapStatusBadge(false, true);
         return trapConfig.drainSeverity === 'brutal' ? 2 : (trapConfig.drainSeverity === 'mild' ? 20 : 7);
       }
 
-      // Nếu không bật bẫy ẩn, trả về winRate của user hoặc mặc định
       if (!trapConfig.enabled) {
         updateTrapStatusBadge(false, false, "BẪY TẮT");
         return (currentUser && currentUser.winRate !== undefined) ? Number(currentUser.winRate) : baseRate;
       }
 
-      // Kiểm tra chu kỳ bẫy
       const isStillInBaitPhase = playerSpinsCount <= trapConfig.baitRounds;
 
       if (isStillInBaitPhase) {
@@ -1722,7 +1687,7 @@
       }
     }
 
-    function setSyncLoading(show, title = "ĐANG ĐỒNG BỘ GOOGLE SHEET", desc = "Đang gửi nhận dữ liệu...") {
+    function setSyncLoading(show, title = "ĐANG ĐỒNG BỘ DỮ LIỆU", desc = "Đang gửi nhận dữ liệu...") {
       const overlay = document.getElementById('gas-sync-overlay');
       const progressBar = document.getElementById('top-sync-progress');
       const spinIcon = document.getElementById('sync-spin-icon');
@@ -1760,7 +1725,7 @@
     }
 
     // API Wrapper
-    async function callGasApi(action, payload = {}, timeoutMs = 6000, showModalLoading = false) {
+    async function callGasApi(action, payload = {}, timeoutMs = 5000, showModalLoading = false) {
       if (showModalLoading) {
         setSyncLoading(true, "ĐỒNG BỘ GOOGLE SHEET", `Đang thực thi lệnh ${action.toUpperCase()}...`);
       }
@@ -1822,10 +1787,12 @@
         if (u && String(u.password) === String(payload.password)) {
           return { status: 'ok', success: true, username: payload.username, role: u.role, balance: u.balance, winRate: u.winRate, token: 'local_' + Date.now() };
         }
-        // Cho phép đăng nhập bất kỳ nếu chưa đăng ký để tránh khóa người dùng
-        return { status: 'ok', success: true, username: payload.username, role: payload.username.toLowerCase() === 'admin' ? 'admin' : 'user', balance: 10000000, winRate: 50, token: 'local_' + Date.now() };
+        return { status: 'error', success: false, message: 'Sai tên đăng nhập hoặc mật khẩu! Thử admin / admin123 hoặc player / 123' };
       }
       if (action === 'register') {
+        if (localUsersDb[payload.username.toLowerCase()]) {
+          return { status: 'error', success: false, message: 'Tên tài khoản này đã tồn tại!' };
+        }
         const role = payload.username.toLowerCase() === 'admin' ? 'admin' : 'user';
         localUsersDb[payload.username.toLowerCase()] = { password: payload.password, role: role, balance: 10000000, winRate: 50 };
         return { status: 'ok', success: true, username: payload.username, role: role, balance: 10000000, winRate: 50, token: 'local_' + Date.now() };
@@ -1849,7 +1816,6 @@
     }
   </script>
 
-  <!-- REEL MATRIX & 3D CELL POPULATOR -->
   <script>
     function getRandomSymbol(forceWin = false, winningSymbol = null) {
       if (forceWin && winningSymbol) {
@@ -1979,23 +1945,29 @@
     }
   </script>
 
-  <!-- MAIN SPIN CONTROLLER & CASCADE ENGINE -->
   <script>
     async function startSpin() {
+      // KIỂM TRA ĐĂNG NHẬP: BẮT BUỘC ĐĂNG NHẬP MỚI ĐƯỢC QUAY
+      if (!currentUser) {
+        showToast("Vui lòng đăng nhập để bắt đầu quay thưởng!", "warning");
+        document.getElementById('auth-modal').classList.remove('hidden');
+        stopAutoSpin();
+        return;
+      }
+
       if (isSpinning) return;
 
-      // Kích hoạt audio context nếu còn suspended
       if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
+        audioCtx.resume().catch(() => {});
       }
 
       const bet = BET_LEVELS[currentBetIndex];
 
       if (freeSpinsLeft <= 0) {
         if (balance < bet) {
-          balance += 5000000; // Tự động tặng vốn khi hết tiền để luôn chơi được
-          showToast("Đã tặng thêm +5.000.000 ₫ vốn hỗ trợ!", "success");
-          updateBalancesUI();
+          showToast("Số dư ví không đủ! Hãy nhập Giftcode hoặc nhờ Admin nạp thêm.", "warning");
+          stopAutoSpin();
+          return;
         }
         balance -= bet;
         jackpotPool += Math.round(bet * 0.05);
@@ -2022,18 +1994,15 @@
       if (spinIcon) spinIcon.classList.add('animate-spin');
       playAudio('spin');
 
-      // Tỉ lệ quyết định thắng/thua ở spin ban đầu
       const effectiveWinRate = calculateEffectiveWinRate();
       const shouldWin = forceJackpotNextSpin || (Math.random() * 100 < effectiveWinRate);
       const chosenWinSymbol = shouldWin 
         ? SYMBOLS.filter(s => !s.isWild && !s.isScatter)[Math.floor(Math.random() * 4)] 
         : null;
 
-      // Hiệu ứng xoay cuộn
       const spinTime = isTurbo ? 200 : 400;
       await animateSpinColumns(spinTime);
 
-      // Sinh ma trận biểu tượng 3D mới
       for (let c = 0; c < COLS; c++) {
         for (let r = 0; r < ROWS; r++) {
           if (shouldWin && c < 3 && r === 0) {
@@ -2044,31 +2013,25 @@
         }
       }
 
-      // Xử lý ép Jackpot nếu có lệnh từ Admin
       if (forceJackpotNextSpin) {
         forceJackpotNextSpin = false;
-        triggerJackpotExplosion(currentUser ? currentUser.username : "Khách VIP");
+        triggerJackpotExplosion(currentUser.username);
       }
 
       renderCurrentGrid();
 
-      // Bắt đầu chuỗi Cascade Nổ Rụng (Tumble)
       await runCascadeLoop(bet);
 
       if (spinIcon) spinIcon.classList.remove('animate-spin');
       isSpinning = false;
 
-      // Đồng bộ số dư
-      if (currentUser) {
-        callGasApi('updateBalance', {
-          username: currentUser.username,
-          balance: balance,
-          spins: playerSpinsCount
-        });
-      }
+      callGasApi('updateBalance', {
+        username: currentUser.username,
+        balance: balance,
+        spins: playerSpinsCount
+      });
 
-      // Tự động quay tiếp nếu bật Auto
-      if (isAuto && balance >= bet) {
+      if (isAuto && currentUser && balance >= bet) {
         setTimeout(startSpin, isTurbo ? 300 : 700);
       } else if (isAuto && balance < bet) {
         stopAutoSpin();
@@ -2081,7 +2044,6 @@
       while (keepCascading) {
         const { winningLines, scatterCount } = checkWinningWays();
 
-        // Kích hoạt Free Spins nếu có 3 Scatter trở lên
         if (scatterCount >= 3 && cascadeStep === 0) {
           triggerFreeSpinsAward(10);
         }
@@ -2094,7 +2056,6 @@
           const activeMult = MULTIPLIERS[Math.min(cascadeStep, MULTIPLIERS.length - 1)];
           let roundWin = 0;
 
-          // Tô sáng các ô nổ 3D
           for (const line of winningLines) {
             const linePayout = line.symbol.payout * line.ways * (bet / 20) * activeMult;
             roundWin += Math.round(linePayout);
@@ -2114,7 +2075,6 @@
 
           await sleep(isTurbo ? 220 : 450);
 
-          // Hiệu ứng nổ biến mất
           for (const line of winningLines) {
             for (const p of line.positions) {
               for (const r of p.rows) {
@@ -2129,7 +2089,6 @@
 
           await sleep(isTurbo ? 160 : 280);
 
-          // Rơi biểu tượng 3D mới xuống (Tumble / Cascade)
           for (let c = 0; c < COLS; c++) {
             const remaining = [];
             for (let r = ROWS - 1; r >= 0; r--) {
@@ -2150,9 +2109,8 @@
           cascadeStep++;
           updateMultipliersUI();
 
-          // Kiểm tra xác suất nổ hũ tự nhiên
           if (Math.random() * 100 < serverJackpotRate) {
-            await triggerJackpotExplosion(currentUser ? currentUser.username : "Khách VIP");
+            await triggerJackpotExplosion(currentUser ? currentUser.username : "Player");
           }
 
           await sleep(isTurbo ? 200 : 380);
@@ -2230,7 +2188,7 @@
       document.getElementById('bonus-splash').classList.add('hidden');
     });
 
-    async function triggerJackpotExplosion(winnerName = "Khách VIP") {
+    async function triggerJackpotExplosion(winnerName = "Player") {
       const wonAmt = jackpotPool;
       balance += wonAmt;
       jackpotPool = 20000000;
@@ -2263,7 +2221,6 @@
     });
   </script>
 
-  <!-- BOTS & REALTIME LEADERBOARD -->
   <script>
     function spawnBotSpin() {
       if (!botConfig.enabled) return;
@@ -2371,7 +2328,6 @@
     }
   </script>
 
-  <!-- INTERACTIVE CONTROLS & EVENT HANDLERS -->
   <script>
     function toggleTurbo() {
       isTurbo = !isTurbo;
@@ -2391,6 +2347,12 @@
     }
 
     function toggleAutoSpin() {
+      if (!currentUser) {
+        showToast("Vui lòng đăng nhập trước khi bật Auto!", "warning");
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+
       if (isAuto) {
         stopAutoSpin();
       } else {
@@ -2433,6 +2395,11 @@
     document.getElementById('btn-spin-action').addEventListener('click', () => startSpin());
     document.getElementById('btn-toggle-turbo').addEventListener('click', toggleTurbo);
     document.getElementById('btn-toggle-auto').addEventListener('click', toggleAutoSpin);
+
+    // Bấm vào nút mở khóa trên màn hình cũng mở Modal Đăng Nhập
+    document.getElementById('btn-lock-login-action').addEventListener('click', () => {
+      document.getElementById('auth-modal').classList.remove('hidden');
+    });
 
     document.getElementById('btn-toggle-sound').addEventListener('click', () => {
       isSoundEnabled = !isSoundEnabled;
@@ -2480,7 +2447,7 @@
     document.getElementById('btn-save-gas-url').addEventListener('click', async () => {
       const u = document.getElementById('input-gas-url').value.trim();
       GAS_APP_URL = u;
-      localStorage.setItem('nh_gas_api_url', u);
+      safeStore.setItem('nh_gas_api_url', u);
       gasModal.classList.add('hidden');
       showToast("Đã lưu cấu hình Google Apps Script!", "info");
       await syncStateWithSheet();
@@ -2499,7 +2466,7 @@
     document.getElementById('btn-open-leaderboard').addEventListener('click', async () => {
       renderLeaderboardsUI();
       document.getElementById('leaderboard-modal').classList.remove('hidden');
-      const res = await callGasApi('getLeaderboard', {}, 6000, true);
+      const res = await callGasApi('getLeaderboard', {}, 5000, true);
       if (res && res.data && res.data.leaderboard) {
         leaderboard = res.data.leaderboard;
         renderLeaderboardsUI();
@@ -2509,7 +2476,7 @@
       document.getElementById('leaderboard-modal').classList.add('hidden');
     });
     document.getElementById('btn-refresh-top-modal').addEventListener('click', async () => {
-      const res = await callGasApi('getLeaderboard', {}, 6000, true);
+      const res = await callGasApi('getLeaderboard', {}, 5000, true);
       if (res && res.data && res.data.leaderboard) {
         leaderboard = res.data.leaderboard;
         renderLeaderboardsUI();
@@ -2519,7 +2486,7 @@
     const sideTopRefresh = document.getElementById('btn-refresh-sidebar-top');
     if (sideTopRefresh) {
       sideTopRefresh.addEventListener('click', async () => {
-        const res = await callGasApi('getLeaderboard', {}, 6000, true);
+        const res = await callGasApi('getLeaderboard', {}, 5000, true);
         if (res && res.data && res.data.leaderboard) {
           leaderboard = res.data.leaderboard;
           renderLeaderboardsUI();
@@ -2563,6 +2530,11 @@
     });
 
     async function redeemCode(code) {
+      if (!currentUser) {
+        showToast("Vui lòng đăng nhập trước khi nhận Giftcode!", "warning");
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
       if (!code) {
         showToast("Vui lòng nhập mã Giftcode!", "warning");
         return;
@@ -2573,14 +2545,14 @@
       }
 
       const res = await callGasApi('redeemGiftcode', {
-        username: currentUser ? currentUser.username : "KhachVIP",
+        username: currentUser.username,
         code: code
       });
 
       if (res && (res.status === 'ok' || res.success)) {
         redeemedCodes.push(code);
         balance = res.data ? res.data.newBalance : (balance + 5000000);
-        if (currentUser) currentUser.balance = balance;
+        currentUser.balance = balance;
         updateBalancesUI();
         playAudio('win');
         trigger3DCoinRain(25);
@@ -2592,7 +2564,7 @@
         if (gift && gift.active) {
           redeemedCodes.push(code);
           balance += gift.reward;
-          if (currentUser) currentUser.balance = balance;
+          currentUser.balance = balance;
           updateBalancesUI();
           playAudio('win');
           trigger3DCoinRain(25);
@@ -2605,7 +2577,7 @@
       }
     }
 
-    // Auth Modes
+    // Auth Modes (ĐĂNG NHẬP / ĐĂNG KÝ)
     let authMode = 'login';
     document.getElementById('tab-auth-login').addEventListener('click', () => {
       authMode = 'login';
@@ -2625,24 +2597,12 @@
       document.getElementById('auth-modal').classList.add('hidden');
     });
 
-    document.getElementById('btn-quick-guest').addEventListener('click', () => {
-      setUserSession({
-        username: 'KhachVIP',
-        role: 'user',
-        balance: 10000000,
-        winRate: 50,
-        token: 'guest_' + Date.now()
-      });
-      document.getElementById('auth-modal').classList.add('hidden');
-      showToast("Đã cấp 10.000.000 ₫ tài khoản Chơi Thử!", "success");
-    });
-
     document.getElementById('auth-form').addEventListener('submit', async () => {
       const username = document.getElementById('auth-username').value.trim();
       const password = document.getElementById('auth-password').value.trim();
 
-      if (!username) {
-        showToast("Vui lòng điền tên tài khoản!", "warning");
+      if (!username || !password) {
+        showToast("Vui lòng nhập đầy đủ tài khoản và mật khẩu!", "warning");
         return;
       }
 
@@ -2661,7 +2621,7 @@
         document.getElementById('auth-password').value = '';
         showToast(`Đăng nhập thành công! Chào mừng ${username}`, "success");
       } else {
-        showToast(res.message || "Xác thực thất bại!", "error");
+        showToast(res.message || "Tài khoản hoặc mật khẩu không chính xác!", "error");
       }
     });
 
@@ -2672,6 +2632,7 @@
       const nameTag = document.getElementById('user-name-tag');
       const roleBadge = document.getElementById('user-role-badge');
       const btnAdmin = document.getElementById('btn-open-admin');
+      const lockOverlay = document.getElementById('guest-lock-overlay');
 
       if (user) {
         balance = user.balance;
@@ -2692,17 +2653,24 @@
           roleBadge.className = 'text-[7.5px] px-1 rounded bg-amber-400/20 text-amber-300 font-bold';
         }
 
-        localStorage.setItem('nh_logged_user', JSON.stringify(user));
+        // Mở khóa màn hình quay
+        if (lockOverlay) lockOverlay.classList.add('hidden');
+
+        safeStore.setItem('nh_logged_user', JSON.stringify(user));
       } else {
-        currentUser = { username: 'KhachVIP', role: 'user', balance: 10000000, winRate: 50 };
-        balance = 10000000;
+        currentUser = null;
+        balance = 0;
         playerSpinsCount = 0;
         btnOpenAuth.classList.remove('hidden');
         userBox.classList.add('hidden');
         userBox.classList.remove('flex');
         btnAdmin.classList.add('hidden');
         btnAdmin.classList.remove('flex');
-        localStorage.removeItem('nh_logged_user');
+
+        // Bật khóa màn hình yêu cầu đăng nhập
+        if (lockOverlay) lockOverlay.classList.remove('hidden');
+
+        safeStore.removeItem('nh_logged_user');
       }
       updateBalancesUI();
     }
@@ -2710,11 +2678,10 @@
     document.getElementById('btn-logout').addEventListener('click', () => {
       setUserSession(null);
       stopAutoSpin();
-      showToast("Đã chuyển về tài khoản Khách VIP", "info");
+      showToast("Đã đăng xuất tài khoản", "info");
     });
   </script>
 
-  <!-- ADMIN PANEL CONTROLS & TRAP SETTINGS -->
   <script>
     document.getElementById('btn-open-admin').addEventListener('click', () => {
       document.getElementById('admin-modal').classList.remove('hidden');
@@ -2761,7 +2728,6 @@
     tabAdmUsers.addEventListener('click', () => switchAdminTab('users'));
     tabAdmBots.addEventListener('click', () => switchAdminTab('bots'));
 
-    // Admin sliders
     document.getElementById('input-admin-jackpot-rate').addEventListener('input', (e) => {
       serverJackpotRate = parseFloat(e.target.value);
       document.getElementById('admin-jackpot-rate-label').textContent = `${serverJackpotRate}%`;
@@ -2772,7 +2738,6 @@
       document.getElementById('admin-global-winrate-label').textContent = `${globalWinRate}%`;
     });
 
-    // Thuật toán bẫy ẩn Handlers & Lệnh Ép Dìm Toàn Server
     document.getElementById('check-trap-enabled').addEventListener('change', (e) => {
       trapConfig.enabled = e.target.checked;
       showToast(trapConfig.enabled ? "Đã KÍCH HOẠT bẫy thu hồi vốn toàn server!" : "Đã TẮT bẫy thu hồi vốn!", trapConfig.enabled ? "warning" : "info");
@@ -2794,8 +2759,8 @@
     document.getElementById('btn-force-trap-drain').addEventListener('click', async () => {
       forceTrapDrainServer = true;
       calculateEffectiveWinRate();
-      await callGasApi('adminUpdateConfig', { forceTrapDrain: true }, 6000, true);
-      showToast("ĐÃ KÍCH HOẠT DÌM VỐN TOÀN SERVER! Tỉ lệ thắng đã bị ép về đáy!", "error");
+      await callGasApi('adminUpdateConfig', { forceTrapDrain: true }, 5000, true);
+      showToast("ĐÃ KÍCH HOẠT DÌM VỐN TOÀN SERVER!", "error");
     });
 
     document.getElementById('btn-reset-trap-state').addEventListener('click', async () => {
@@ -2803,17 +2768,16 @@
       playerSpinsCount = 0;
       calculateEffectiveWinRate();
       updateBalancesUI();
-      await callGasApi('adminUpdateConfig', { forceTrapDrain: false }, 6000, true);
+      await callGasApi('adminUpdateConfig', { forceTrapDrain: false }, 5000, true);
       showToast("Đã reset Bẫy! Toàn server bắt đầu lại Giai đoạn mồi ăn đậm!", "success");
     });
 
-    // Save Jackpot Pool Value
     document.getElementById('btn-save-jackpot-val').addEventListener('click', async () => {
       const v = parseFloat(document.getElementById('input-admin-jackpot').value);
       if (v > 0) {
         jackpotPool = v;
         updateBalancesUI();
-        await callGasApi('adminUpdateConfig', { jackpotPool: v }, 6000, true);
+        await callGasApi('adminUpdateConfig', { jackpotPool: v }, 5000, true);
         showToast(`Đã lưu Hũ Hoàng Kim thành ${formatVND(v)}!`, "success");
       }
     });
@@ -2821,7 +2785,7 @@
     document.getElementById('btn-force-jackpot').addEventListener('click', async () => {
       forceJackpotNextSpin = true;
       document.getElementById('admin-modal').classList.add('hidden');
-      await callGasApi('adminForceJackpot', {}, 6000, true);
+      await callGasApi('adminForceJackpot', {}, 5000, true);
       showToast("Lệnh đã nhận! Lượt quay tới chắc chắn Nổ Hũ 3D!", "warning");
     });
 
@@ -2831,12 +2795,11 @@
         balance = Math.max(0, balance + amt);
         if (currentUser) currentUser.balance = balance;
         updateBalancesUI();
-        await callGasApi('updateBalance', { username: currentUser ? currentUser.username : 'admin', balance: balance }, 6000, true);
+        await callGasApi('updateBalance', { username: currentUser ? currentUser.username : 'admin', balance: balance }, 5000, true);
         showToast(`Admin đã điều chỉnh: ${amt > 0 ? '+' : ''}${formatVND(amt)}`, "success");
       });
     });
 
-    // Users List & Edit Handlers
     document.getElementById('btn-reload-admin-users').addEventListener('click', loadAdminUsersList);
 
     async function loadAdminUsersList() {
@@ -2844,7 +2807,7 @@
       if (!tbody) return;
       tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-stone-400">Đang tải người chơi...</td></tr>';
 
-      const res = await callGasApi('adminGetUsers', {}, 6000, false);
+      const res = await callGasApi('adminGetUsers', {}, 5000, false);
       const users = (res && res.data && res.data.users) || (res && res.users) || [];
 
       if (users.length > 0) {
@@ -2915,14 +2878,13 @@
         role: newRole,
         balance: newBal,
         winRate: newWinRate
-      }, 6000, true);
+      }, 5000, true);
 
       document.getElementById('admin-user-edit-box').classList.add('hidden');
       loadAdminUsersList();
       showToast(`Đã lưu Tỉ Lệ ${newWinRate}% cho ${currentEditingUser}!`, "success");
     });
 
-    // Bot Config Handlers
     document.getElementById('check-bot-enabled').addEventListener('change', async (e) => {
       botConfig.enabled = e.target.checked;
       restartBotLoop();
@@ -2951,7 +2913,7 @@
     }
 
     async function syncStateWithSheet() {
-      const res = await callGasApi('getState', {}, 6000, false);
+      const res = await callGasApi('getState', {}, 5000, false);
       if (res && (res.status === 'ok' || res.success)) {
         const d = res.data || res;
         if (d.jackpotPool) jackpotPool = Number(d.jackpotPool);
@@ -2995,7 +2957,7 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // App Initialize
+    // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
       startLoadingSequence();
       initThreeScene();
@@ -3004,16 +2966,18 @@
       renderLeaderboardsUI();
       restartBotLoop();
 
-      const savedUser = localStorage.getItem('nh_logged_user');
-      if (savedUser) {
+      // Kiểm tra phiên người dùng đã lưu từ trước
+      const savedUserStr = safeStore.getItem('nh_logged_user');
+      if (savedUserStr) {
         try {
-          const parsed = JSON.parse(savedUser);
+          const parsed = JSON.parse(savedUserStr);
           setUserSession(parsed);
         } catch (e) {
-          setUserSession({ username: 'KhachVIP', role: 'user', balance: 10000000, winRate: 50 });
+          setUserSession(null);
         }
       } else {
-        setUserSession({ username: 'KhachVIP', role: 'user', balance: 10000000, winRate: 50 });
+        // Chưa đăng nhập: Bắt buộc khóa màn hình theo yêu cầu
+        setUserSession(null);
       }
 
       syncStateWithSheet();
