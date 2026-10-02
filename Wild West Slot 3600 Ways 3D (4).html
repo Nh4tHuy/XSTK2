@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wild West Bonanza 3D - Nổ Hũ Viễn Tây 3600 Ways</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            saloon: {
+              dark: '#0a0604',
+              woodDark: '#1a0e07',
+              wood: '#2c170c',
+              woodBorder: '#5b321a',
+              woodLight: '#432514',
+              gold: '#ffb300',
+              goldLight: '#ffe57f',
+              goldDark: '#b27b00',
+              brass: '#d4af37',
+              redAccent: '#d32f2f'
+            }
+          },
+          fontFamily: {
+            western: ['Cinzel', 'Rye', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600;700;800&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Three.js for 3D Saloon ambiance & Gold coin explosions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 20%, #211209 0%, #0a0604 85%);
+      color: #faebd7;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .western-font { font-family: 'Cinzel', serif; }
+    .font-western-title { font-family: 'Rye', cursive; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* 3D Background Canvas */
+    #three-bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Saloon Real Wood Texture Frame */
+    .saloon-wood-texture {
+      background: linear-gradient(180deg, #32190d 0%, #1c0e07 45%, #2a150b 100%);
+      box-shadow: 
+        inset 0 0 0 2px #6b3a1d,
+        inset 0 4px 15px rgba(0, 0, 0, 0.95),
+        0 10px 30px rgba(0, 0, 0, 0.9);
+    }
+    
+    /* 3D Golden Plaque for Ribbon Multipliers */
+    .golden-plaque {
+      background: linear-gradient(180deg, #fff2b2 0%, #ffc107 25%, #9e6c00 70%, #ffca28 100%);
+      border: 1.5px solid #fff8e1;
+      box-shadow: 
+        0 2px 10px rgba(0,0,0,0.8),
+        inset 0 1px 3px rgba(255,255,255,0.8),
+        inset 0 -2px 4px rgba(0,0,0,0.6);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+      color: #1a0a00;
+    }
+
+    .golden-frame-beveled {
+      background: linear-gradient(180deg, #3c2113 0%, #1a0d06 100%);
+      border: 1.5px solid #9f6630;
+      box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.85),
+        inset 0 0 12px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 215, 0, 0.35);
+    }
+
+    /* Symbol 3D Cell Box Styling */
+    .slot-cell {
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      will-change: transform, opacity;
+      height: 100%;
+      min-height: 0;
+      width: 100%;
+    }
+    .slot-cell-win {
+      animation: cellWinPulse 0.45s infinite alternate ease-in-out;
+      border-color: #ffd700 !important;
+      box-shadow: 0 0 18px rgba(255, 215, 0, 0.95), inset 0 0 12px rgba(255, 215, 0, 0.7) !important;
+      z-index: 10;
+    }
+    .slot-cell-explode {
+      animation: explodeTumble 0.36s ease-out forwards;
+    }
+    .slot-cell-drop {
+      animation: dropBouncy 0.32s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+    }
+
+    @keyframes cellWinPulse {
+      0% { transform: scale(1.02); filter: brightness(1.2); }
+      100% { transform: scale(1.08) rotateZ(1deg); filter: brightness(1.6) drop-shadow(0 0 12px #ffd700); }
+    }
+    @keyframes explodeTumble {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      40% { transform: scale(1.22) rotate(8deg); filter: brightness(2); opacity: 0.95; }
+      100% { transform: scale(0.1) rotate(-25deg); opacity: 0; }
+    }
+    @keyframes dropBouncy {
+      0% { transform: translateY(-40px) scale(0.9); opacity: 0.2; }
+      70% { transform: translateY(4px) scale(1.03); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    /* Revolver Muzzle Flash Animation */
+    .gun-recoil-left {
+      animation: recoilL 0.22s ease-out;
+    }
+    .gun-recoil-right {
+      animation: recoilR 0.22s ease-out;
+    }
+    @keyframes recoilL {
+      0% { transform: scaleX(-1) translateY(0) rotate(0deg); }
+      40% { transform: scaleX(-1) translateY(-8px) rotate(-18deg) scale(1.25); filter: drop-shadow(0 0 10px #ffb300); }
+      100% { transform: scaleX(-1) translateY(0) rotate(0deg); }
+    }
+    @keyframes recoilR {
+      0% { transform: translateY(0) rotate(0deg); }
+      40% { transform: translateY(-8px) rotate(-18deg) scale(1.25); filter: drop-shadow(0 0 10px #ffb300); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #ffb300;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(255, 179, 0, 0.85);
+    }
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #5b321a; border-radius: 4px; }
+  </style>
+</head>
+<body class="h-[100dvh] w-screen overflow-hidden flex flex-col justify-between relative select-none">
+
+  <!-- 3D Three.js Background Canvas -->
+  <canvas id="three-bg-canvas"></canvas>
+
+  <!-- Top Header Navigation Bar -->
+  <header class="relative z-20 h-10 sm:h-11 bg-saloon-dark/95 border-b border-saloon-woodBorder flex items-center justify-between px-2.5 sm:px-4 backdrop-blur shadow-lg flex-shrink-0">
+    <!-- Left Logo & 3600 Ways Badge -->
+    <div class="flex items-center space-x-1.5">
+      <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-amber-600 via-yellow-500 to-amber-200 p-0.5 shadow flex items-center justify-center transform hover:rotate-6 transition">
+        <i class="fa-solid fa-hat-cowboy text-black text-xs sm:text-sm drop-shadow"></i>
+      </div>
+      <div>
+        <div class="flex items-center space-x-1">
+          <span class="western-font font-black text-xs sm:text-sm tracking-wider text-saloon-gold drop-shadow leading-none">WILD WEST</span>
+          <span class="text-[8px] bg-red-900/90 text-amber-200 px-1 py-0.2 rounded font-mono font-bold border border-amber-500/60 shadow leading-none">3600 WAYS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Jackpot Ticker Bar -->
+    <div class="hidden sm:flex items-center space-x-1.5 bg-gradient-to-r from-saloon-wood via-[#3d2315] to-saloon-wood border border-amber-400/60 px-3 py-0.5 rounded-full shadow">
+      <i class="fa-solid fa-crown text-saloon-gold text-[10px] animate-bounce"></i>
+      <span class="text-[9px] uppercase font-bold text-amber-300 font-mono tracking-wider">HŨ:</span>
+      <span id="jackpot-pool-display" class="font-mono font-black text-xs text-saloon-goldLight tracking-wider drop-shadow">50.000.000 ₫</span>
+    </div>
+
+    <!-- Right Header Actions (Sound, Code, Admin, Auth) -->
+    <div class="flex items-center space-x-1 sm:space-x-2">
+      <!-- Giftcode Button -->
+      <button id="btn-open-giftcode" title="Nhập Giftcode nhận thưởng" class="h-7 sm:h-7.5 px-2 rounded-lg bg-amber-500/20 border border-amber-400/60 hover:bg-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-bold font-mono flex items-center space-x-1 transition shadow">
+        <i class="fa-solid fa-gift text-[10px] text-amber-400"></i>
+        <span>Code</span>
+      </button>
+
+      <!-- Sound Mute / Unmute Button -->
+      <button id="btn-toggle-sound" title="Bật/Tắt âm thanh" class="h-7 w-7 sm:h-7.5 sm:w-7.5 rounded-lg bg-saloon-woodLight/80 border border-saloon-woodBorder hover:text-saloon-gold text-stone-300 flex items-center justify-center text-[11px] transition shadow">
+        <i id="sound-icon" class="fa-solid fa-volume-high text-amber-400"></i>
+      </button>
+
+      <!-- Admin Modal Button -->
+      <button id="btn-open-admin" title="Bảng quản trị Admin" class="hidden h-7 sm:h-7.5 px-2 rounded-lg bg-gradient-to-r from-red-600 to-amber-600 border border-amber-300 text-white font-bold text-[10px] sm:text-xs items-center space-x-1 shadow transition hover:brightness-110">
+        <i class="fa-solid fa-crown text-[10px] text-yellow-200"></i>
+        <span>ADMIN</span>
+      </button>
+
+      <!-- Auth Action Container -->
+      <div id="auth-actions">
+        <button id="btn-open-auth" class="h-7 sm:h-7.5 px-2.5 rounded-lg bg-gradient-to-r from-amber-400 to-yellow-300 hover:from-amber-300 text-black font-bold text-[10px] sm:text-xs flex items-center space-x-1 shadow transition active:scale-95">
+          <i class="fa-solid fa-user-lock text-[10px]"></i>
+          <span>Đăng Nhập</span>
+        </button>
+
+        <div id="user-logged-box" class="hidden items-center space-x-1">
+          <div class="h-7 sm:h-7.5 px-2 rounded-lg bg-saloon-woodLight/90 border border-saloon-woodBorder flex items-center space-x-1 text-[10px] sm:text-xs font-mono shadow">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="user-name-tag" class="font-bold text-stone-100 max-w-[65px] sm:max-w-[100px] truncate">Player</span>
+            <span id="user-role-badge" class="text-[8px] px-1 rounded bg-amber-400/20 text-amber-300 font-bold">USER</span>
+          </div>
+          <button id="btn-logout" title="Đăng xuất" class="h-7 w-7 sm:h-7.5 sm:w-7.5 rounded-lg bg-rose-950/60 border border-rose-800 text-rose-300 hover:bg-rose-900 flex items-center justify-center text-[10px] transition shadow">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 flex-1 flex flex-col justify-between p-1 max-w-md mx-auto w-full min-h-0 overflow-hidden gap-1">
+
+    <!-- 1. MULTIPLIER ARCH RIBBON -->
+    <div class="w-full flex-shrink-0">
+      <div class="relative w-full bg-gradient-to-r from-[#2a170b] via-[#522d16] to-[#2a170b] border border-saloon-woodBorder rounded-lg py-0.5 px-2 shadow flex items-center justify-between">
+        <span class="text-[8px] font-mono font-bold text-amber-300/80 uppercase tracking-tighter">3600 WAYS</span>
+
+        <!-- Step Multipliers (x2, x4, x8, x16, x32) -->
+        <div class="flex items-center space-x-1" id="multiplier-ribbon">
+          <div class="mult-step px-1 py-0.2 rounded font-mono font-bold text-[9px] sm:text-[10px] text-stone-400 transition" data-step="1">x2</div>
+          <div class="mult-step px-1 py-0.2 rounded font-mono font-bold text-[9px] sm:text-[10px] text-stone-400 transition" data-step="2">x4</div>
+          <div id="mult-banner-active" class="golden-plaque px-2.5 py-0.2 rounded-md font-black text-xs sm:text-sm western-font transform scale-105 shadow transition-all duration-200" data-step="0">
+            x1
+          </div>
+          <div class="mult-step px-1 py-0.2 rounded font-mono font-bold text-[9px] sm:text-[10px] text-stone-400 transition" data-step="4">x16</div>
+          <div class="mult-step px-1 py-0.2 rounded font-mono font-bold text-[9px] sm:text-[10px] text-stone-400 transition" data-step="5">x32</div>
+        </div>
+
+        <div id="free-spin-tag" class="hidden text-[8px] font-black bg-rose-600 px-1 py-0.2 rounded text-white animate-bounce shadow">
+          FS: <span id="fs-count">0</span>
+        </div>
+        <span class="text-[8px] font-mono font-bold text-amber-300/80 uppercase tracking-tighter">CASCADE</span>
+      </div>
+    </div>
+
+    <!-- 2. REEL MATRIX CONTAINER (Auto-fit flex-1 without clipping icons) -->
+    <div class="w-full flex-1 min-h-0 flex flex-col justify-center relative">
+      <div class="saloon-wood-texture w-full h-full rounded-xl p-1 border border-saloon-woodBorder flex flex-col justify-between relative overflow-hidden shadow-2xl">
+        
+        <!-- 5 Columns Matrix Grid -->
+        <div id="reels-grid" class="grid grid-cols-5 gap-1 h-full w-full relative z-10 min-h-0">
+          <!-- Populated by JavaScript with rich, wide SVG 3D Western symbols -->
+        </div>
+
+        <!-- Big Win Flash Screen -->
+        <div id="win-flash-overlay" class="absolute inset-0 bg-yellow-400/20 pointer-events-none opacity-0 transition-opacity duration-150 z-20"></div>
+
+        <!-- Free Spin Splash Dialog -->
+        <div id="bonus-splash" class="absolute inset-0 bg-black/85 backdrop-blur-md z-30 flex flex-col items-center justify-center p-3 text-center hidden">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-600 flex items-center justify-center text-2xl text-black font-black mb-1 animate-bounce shadow-xl">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <h2 class="western-font font-black text-xl text-saloon-gold mb-0.5">FREE SPINS THƯỞNG!</h2>
+          <p id="bonus-desc" class="text-[11px] text-stone-200 mb-3 font-mono">Nhận ngay 10 lượt quay miễn phí với hệ số tối đa x32!</p>
+          <button id="btn-start-bonus" class="px-5 py-2 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-black text-xs uppercase tracking-wider shadow-xl active:scale-95">
+            BẮT ĐẦU NGAY
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TOTAL WIN BAR WITH TWIN GOLD REVOLVERS -->
+    <div class="w-full flex-shrink-0">
+      <div class="golden-frame-beveled rounded-lg py-0.5 px-3 flex items-center justify-between shadow">
+        <!-- Left Gold Revolver (Flipped) -->
+        <div id="gun-left" class="text-saloon-gold text-base sm:text-lg transform -scale-x-100 flex-shrink-0 drop-shadow">
+          <i class="fa-solid fa-gun"></i>
+        </div>
+
+        <!-- Center Win Display with Golden Bull Plaque -->
+        <div class="flex flex-col items-center justify-center flex-1 px-1">
+          <span class="text-[8px] western-font font-black text-amber-300 tracking-widest leading-none flex items-center space-x-1">
+            <i class="fa-solid fa-skull text-[7.5px] text-amber-400"></i>
+            <span>TOTAL WIN</span>
+            <i class="fa-solid fa-skull text-[7.5px] text-amber-400"></i>
+          </span>
+          <span id="total-win-display" class="font-mono font-black text-base sm:text-lg text-saloon-goldLight tracking-wider leading-tight drop-shadow">
+            0 ₫
+          </span>
+        </div>
+
+        <!-- Right Gold Revolver -->
+        <div id="gun-right" class="text-saloon-gold text-base sm:text-lg flex-shrink-0 drop-shadow">
+          <i class="fa-solid fa-gun"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. BOTTOM INFO DASHBOARD (Balance, Bet, Spin Win) -->
+    <div class="w-full grid grid-cols-3 gap-1 text-center font-mono text-xs flex-shrink-0">
+      <div class="bg-saloon-dark/95 border border-saloon-woodBorder rounded-lg py-0.5 px-1 shadow">
+        <span class="block text-[7.5px] text-stone-400 uppercase font-sans leading-tight">SỐ DƯ VÍ</span>
+        <span id="player-balance-display" class="font-bold text-saloon-gold text-[10.5px] sm:text-xs whitespace-nowrap leading-tight">1.000.000 ₫</span>
+      </div>
+
+      <div class="bg-saloon-dark/95 border border-saloon-woodBorder rounded-lg py-0.5 px-1 shadow">
+        <span class="block text-[7.5px] text-stone-400 uppercase font-sans leading-tight">MỨC CƯỢC</span>
+        <span id="player-bet-display" class="font-bold text-amber-200 text-[10.5px] sm:text-xs whitespace-nowrap leading-tight">20.000 ₫</span>
+      </div>
+
+      <div class="bg-saloon-dark/95 border border-saloon-woodBorder rounded-lg py-0.5 px-1 shadow">
+        <span class="block text-[7.5px] text-stone-400 uppercase font-sans leading-tight">THẮNG LƯỢT</span>
+        <span id="current-spin-win-display" class="font-bold text-emerald-400 text-[10.5px] sm:text-xs whitespace-nowrap leading-tight">0 ₫</span>
+      </div>
+    </div>
+
+    <!-- 5. STICKY INTERACTIVE CONTROL DASHBOARD -->
+    <div class="w-full flex items-center justify-between px-2 py-1 bg-gradient-to-r from-saloon-wood/95 via-[#3d2112]/95 to-saloon-wood/95 border border-saloon-woodBorder rounded-xl flex-shrink-0 shadow-2xl backdrop-blur-sm">
+      
+      <!-- Turbo Toggle Button -->
+      <button id="btn-toggle-turbo" class="flex flex-col items-center justify-center w-8.5 h-8.5 rounded-lg bg-saloon-woodLight/80 border border-saloon-woodBorder hover:border-amber-400 text-stone-300 transition active:scale-90 shadow">
+        <i id="turbo-icon" class="fa-solid fa-bolt text-[11px] mb-0.5"></i>
+        <span class="text-[6.5px] font-bold font-mono uppercase tracking-tighter leading-none">TURBO</span>
+      </button>
+
+      <!-- Bet Minus Button (-) -->
+      <button id="btn-bet-minus" class="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-saloon-woodLight border border-saloon-woodBorder text-saloon-gold hover:text-white flex items-center justify-center text-xs font-black active:scale-90 transition shadow">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+
+      <!-- MAIN 3D SPIN BUTTON WITH BUFFALO EMBLEM -->
+      <button id="btn-spin-action" class="relative group w-12 h-12 sm:w-13 sm:h-13 rounded-full p-0.5 bg-gradient-to-b from-amber-300 via-yellow-600 to-amber-950 shadow-xl active:scale-95 transition transform">
+        <div class="w-full h-full rounded-full bg-gradient-to-tr from-[#2d150b] to-[#4e2714] border border-amber-300 flex flex-col items-center justify-center shadow-inner group-hover:brightness-110">
+          <i id="spin-main-icon" class="fa-solid fa-rotate text-base sm:text-lg text-saloon-goldLight transition-transform duration-500"></i>
+        </div>
+      </button>
+
+      <!-- Bet Plus Button (+) -->
+      <button id="btn-bet-plus" class="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full bg-saloon-woodLight border border-saloon-woodBorder text-saloon-gold hover:text-white flex items-center justify-center text-xs font-black active:scale-90 transition shadow">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+
+      <!-- Auto Spin Toggle Button -->
+      <button id="btn-toggle-auto" class="flex flex-col items-center justify-center w-8.5 h-8.5 rounded-lg bg-saloon-woodLight/80 border border-saloon-woodBorder hover:border-amber-400 text-stone-300 transition active:scale-90 shadow">
+        <i id="auto-icon" class="fa-solid fa-play text-[11px] mb-0.5"></i>
+        <span id="auto-label" class="text-[6.5px] font-bold font-mono uppercase tracking-tighter leading-none">AUTO</span>
+      </button>
+
+    </div>
+
+  </main>
+
+  <!-- 1. JACKPOT BIG WIN CELEBRATION MODAL -->
+  <div id="jackpot-win-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="golden-frame-beveled max-w-sm w-full rounded-2xl p-6 text-center shadow-2xl space-y-4 border-2 border-yellow-400 animate-bounce">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-amber-400 via-yellow-300 to-yellow-600 flex items-center justify-center text-3xl text-black shadow-xl">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div>
+        <h2 class="font-western-title text-2xl text-yellow-300 drop-shadow">NỔ HŨ HOÀNG KIM!</h2>
+        <p class="text-xs font-mono text-stone-300 mt-1">Chúc mừng bạn đã trúng thưởng Jackpot cực đại</p>
+      </div>
+      <div class="py-3 px-4 bg-black/60 rounded-xl border border-yellow-500/50 shadow-inner">
+        <span id="jackpot-won-amount" class="font-mono font-black text-2xl text-yellow-300 drop-shadow">50.000.000 ₫</span>
+      </div>
+      <button id="btn-collect-jackpot" class="w-full py-3 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-sm uppercase tracking-wider shadow-lg active:scale-95 transition">
+        NHẬN THƯỞNG NGAY
+      </button>
+    </div>
+  </div>
+
+  <!-- 2. POPUP TẶNG GIFTCODE SAU 60 GIÂY -->
+  <div id="popup-giftcode-60s" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[70] flex items-center justify-center p-4 hidden">
+    <div class="relative bg-gradient-to-b from-[#2a170b] to-[#120904] border-2 border-amber-400 w-full max-w-sm rounded-3xl p-5 shadow-2xl text-center space-y-3.5">
+      <button id="btn-close-60s-popup" class="absolute right-3.5 top-3.5 text-stone-400 hover:text-white p-1">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center text-black text-2xl shadow-xl">
+        <i class="fa-solid fa-gift"></i>
+      </div>
+      <div class="space-y-1">
+        <div class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">🎉 QUÀ TẶNG TÂN THỦ</div>
+        <h3 class="text-lg font-black text-white western-font">TẶNG BẠN GIFTCODE VIP</h3>
+        <p class="text-[11px] text-stone-300 leading-relaxed px-2 font-mono">
+          Nhận ngay <b class="text-emerald-400 font-bold">+5.000.000 VNĐ</b> vào ví cược!
+        </p>
+      </div>
+      <div class="py-2 px-3 bg-black/60 border border-amber-400/40 rounded-xl flex items-center justify-between font-mono">
+        <span class="text-xs text-stone-400">Mã:</span>
+        <span class="text-base font-black text-amber-400 tracking-wider">VIP777</span>
+        <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">+5.000.000 ₫</span>
+      </div>
+      <button id="btn-claim-60s-code" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-300 text-black font-black text-xs uppercase tracking-wide shadow-lg active:scale-95 transition">
+        NHẬN THƯỞNG VÀO VÍ
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. GIFTCODE REDEEM MODAL -->
+  <div id="giftcode-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-saloon-dark border border-saloon-woodBorder w-full max-w-sm rounded-2xl p-4 shadow-2xl space-y-3">
+      <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
+        <h3 class="text-sm font-bold text-amber-300 flex items-center space-x-1.5 western-font">
+          <i class="fa-solid fa-gift text-amber-400"></i>
+          <span>NHẬP MÃ GIFTCODE</span>
+        </h3>
+        <button id="btn-close-giftcode" class="text-stone-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="text-[10px] text-stone-400 font-mono">Chạm nhanh mã khả dụng bên dưới:</div>
+      <div class="flex flex-wrap gap-1.5">
+        <button type="button" class="btn-fill-code px-2 py-1 rounded bg-saloon-woodLight border border-saloon-woodBorder font-mono text-[10px] text-amber-300 hover:bg-amber-400 hover:text-black transition" data-code="VIP777">VIP777 (+5M)</button>
+        <button type="button" class="btn-fill-code px-2 py-1 rounded bg-saloon-woodLight border border-saloon-woodBorder font-mono text-[10px] text-amber-300 hover:bg-amber-400 hover:text-black transition" data-code="WILD999">WILD999 (+10M)</button>
+        <button type="button" class="btn-fill-code px-2 py-1 rounded bg-saloon-woodLight border border-saloon-woodBorder font-mono text-[10px] text-amber-300 hover:bg-amber-400 hover:text-black transition" data-code="NOHU2026">NOHU2026 (+2M)</button>
+      </div>
+      <form id="giftcode-form" class="space-y-3" onsubmit="return false;">
+        <input type="text" id="input-giftcode" required placeholder="Nhập mã (VD: VIP777)" class="w-full bg-black/60 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono uppercase text-xs font-bold tracking-wider focus:outline-none focus:border-amber-400">
+        <button type="submit" id="btn-submit-giftcode" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-300 text-black font-bold text-xs shadow-lg active:scale-95 transition">
+          XÁC NHẬN ĐỔI MÃ
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. AUTH MODAL (Login / Register) -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-saloon-dark border border-saloon-woodBorder w-full max-w-sm rounded-2xl p-4 shadow-2xl space-y-3">
+      <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
+        <h3 class="text-sm font-bold text-amber-300 western-font">TÀI KHOẢN CAO BỒI</h3>
+        <button id="btn-close-auth" class="text-stone-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="grid grid-cols-2 bg-black/60 p-1 rounded-xl border border-saloon-woodBorder text-xs font-semibold">
+        <button id="tab-auth-login" class="py-1.5 rounded-lg bg-saloon-woodLight text-saloon-gold font-bold transition">Đăng Nhập</button>
+        <button id="tab-auth-register" class="py-1.5 rounded-lg text-stone-400 hover:text-white transition">Đăng Ký</button>
+      </div>
+      <form id="auth-form" class="space-y-3 text-xs" onsubmit="return false;">
+        <div>
+          <label class="text-stone-400 block mb-1">Tên tài khoản</label>
+          <input type="text" id="auth-username" required placeholder="Nhập tài khoản (admin để nhận quyền)" class="w-full bg-black/60 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="text-stone-400 block mb-1">Mật khẩu</label>
+          <input type="password" id="auth-password" required placeholder="Nhập mật khẩu" class="w-full bg-black/60 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
+        </div>
+        <button type="submit" id="btn-submit-auth" class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs shadow-lg transition active:scale-95">
+          TIẾP TỤC
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. ADMIN CONTROL PANEL MODAL -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-saloon-dark border border-saloon-woodBorder w-full max-w-md rounded-2xl p-4 shadow-2xl space-y-3 max-h-[92vh] overflow-y-auto custom-scroll">
+      <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
+        <h3 class="text-sm font-bold text-saloon-gold flex items-center space-x-1.5">
+          <i class="fa-solid fa-crown text-amber-400"></i>
+          <span>BẢNG ĐIỀU KHIỂN QUẢN TRỊ ADMIN</span>
+        </h3>
+        <button id="btn-close-admin" class="text-stone-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-1 bg-black/50 p-1 rounded-xl border border-saloon-woodBorder text-xs font-semibold">
+        <button id="tab-admin-gameplay" class="py-1.5 rounded-lg bg-saloon-woodLight text-saloon-gold font-bold">Cài Đặt Game</button>
+        <button id="tab-admin-users" class="py-1.5 rounded-lg text-stone-400 hover:text-white">Quản Lý Vốn User</button>
+      </div>
+
+      <!-- Tab View 1: Gameplay Controls -->
+      <div id="admin-view-gameplay" class="space-y-3 text-xs">
+        <!-- Force Jackpot Trigger -->
+        <div class="p-2.5 bg-gradient-to-r from-red-950/60 to-amber-950/60 border border-red-800 rounded-xl flex items-center justify-between">
+          <div>
+            <div class="font-bold text-white">Lệnh Ép Nổ Hũ Jackpot</div>
+            <div class="text-[10px] text-stone-300">Lượt quay kế tiếp chắc chắn trúng Hũ Vàng</div>
+          </div>
+          <button id="btn-force-jackpot" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-black text-xs transition active:scale-95 shadow">
+            ÉP NỔ HŨ
+          </button>
+        </div>
+
+        <!-- Jackpot Pool Adjust -->
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-stone-400">Giá trị quỹ Hũ Vàng (VNĐ):</span>
+            <span id="admin-jackpot-label" class="font-bold text-saloon-gold font-mono">50.000.000 ₫</span>
+          </div>
+          <div class="flex space-x-1.5">
+            <input type="number" id="input-admin-jackpot" step="5000000" class="flex-1 bg-black/60 border border-saloon-woodBorder rounded px-2.5 py-1 text-white font-mono focus:outline-none">
+            <button id="btn-save-jackpot-val" class="px-3 py-1 bg-amber-500 text-black font-bold rounded hover:bg-amber-400 transition">Lưu Hũ</button>
+          </div>
+        </div>
+
+        <!-- System RTP Slider -->
+        <div class="space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-stone-400">Tỷ lệ hoàn trả (RTP):</span>
+            <span id="admin-rtp-label" class="font-bold text-amber-400 font-mono">96%</span>
+          </div>
+          <input type="range" id="input-admin-rtp" min="50" max="99" value="96" class="w-full custom-range bg-saloon-woodLight h-2 rounded-lg appearance-none cursor-pointer">
+        </div>
+
+        <!-- Scatter Frequency -->
+        <div class="space-y-1">
+          <label class="text-stone-400 block">Tần suất xuất hiện Thỏi Vàng Scatter:</label>
+          <select id="select-admin-scatter" class="w-full bg-black/60 border border-saloon-woodBorder rounded p-1.5 text-white font-mono focus:outline-none">
+            <option value="rare">Hiếm (Ít ra vòng quay miễn phí)</option>
+            <option value="normal" selected>Bình thường (Chuẩn 3600 Ways)</option>
+            <option value="easy">Dễ (Liên tục nổ Free Spins)</option>
+          </select>
+        </div>
+
+        <!-- Quick Wallet Deposit for Admin -->
+        <div class="p-2.5 bg-saloon-woodLight/60 rounded-xl border border-saloon-woodBorder space-y-1.5">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-stone-200">Ví Admin:</span>
+            <span id="admin-my-balance" class="font-mono font-bold text-emerald-400">1.000.000 ₫</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1 font-mono text-[10px]">
+            <button class="btn-admin-add-cap py-1 rounded bg-saloon-wood border border-saloon-woodBorder text-amber-300 hover:bg-amber-400 hover:text-black font-bold" data-amt="500000">+500k</button>
+            <button class="btn-admin-add-cap py-1 rounded bg-saloon-wood border border-saloon-woodBorder text-amber-300 hover:bg-amber-400 hover:text-black font-bold" data-amt="2000000">+2M</button>
+            <button class="btn-admin-add-cap py-1 rounded bg-saloon-wood border border-saloon-woodBorder text-amber-300 hover:bg-amber-400 hover:text-black font-bold" data-amt="10000000">+10M</button>
+            <button class="btn-admin-add-cap py-1 rounded bg-rose-950/80 border border-rose-800 text-rose-300 hover:bg-rose-900 font-bold" data-amt="-2000000">-2M</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab View 2: User Capital Management -->
+      <div id="admin-view-users" class="space-y-2 text-xs hidden">
+        <div class="text-stone-400 text-[11px]">Danh sách người chơi trong hệ thống (Bộ nhớ tạm):</div>
+        <div class="bg-black/60 rounded-xl border border-saloon-woodBorder overflow-hidden">
+          <table class="w-full text-left text-[11px] font-mono">
+            <thead class="bg-saloon-wood text-stone-400 border-b border-saloon-woodBorder">
+              <tr>
+                <th class="p-2">User</th>
+                <th class="p-2">Role</th>
+                <th class="p-2 text-right">Số Dư</th>
+                <th class="p-2 text-center">Tác Vụ</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody" class="divide-y divide-saloon-woodBorder/50"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-3 right-3 z-50 flex flex-col space-y-1.5 pointer-events-none"></div>
+
+  <script>
+    /* 
+      10 biểu tượng Western 3D chân thực, mở rộng tỉ lệ chiều ngang (w-full max-w-[90%]),
+      tránh tình trạng co hẹp hay lệch icon trên di động.
+    */
+    const SYMBOLS = [
+      {
+        id: 'cowboy',
+        name: 'Cao Bồi Khăn Đỏ',
+        color: 'text-rose-400',
+        payout: 5.5,
+        weight: 6,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <ellipse cx="34" cy="18" rx="31" ry="8" fill="#5d2800" stroke="#ffb300" stroke-width="2"/>
+            <path d="M19 18 C19 5, 49 5, 49 18 Z" fill="#8d3d04" stroke="#ffb300" stroke-width="2"/>
+            <rect x="22" y="15" width="24" height="3" fill="#ffb300"/>
+            <circle cx="34" cy="32" r="14" fill="#e0a96d" />
+            <ellipse cx="29" cy="29" rx="2.5" ry="3" fill="#1c0d02"/>
+            <ellipse cx="39" cy="29" rx="2.5" ry="3" fill="#1c0d02"/>
+            <path d="M20 33 L48 33 L34 52 Z" fill="#c62828" stroke="#ffebee" stroke-width="1.5" />
+            <path d="M28 40 L34 47 L40 40" stroke="#ffcdd2" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        `
+      },
+      {
+        id: 'gun',
+        name: 'Súng Lục Rulo',
+        color: 'text-amber-300',
+        payout: 4.0,
+        weight: 8,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <path d="M10 26 L40 26 L40 35 L10 35 Z" fill="#cfd8dc" stroke="#37474f" stroke-width="2" />
+            <circle cx="38" cy="30" r="9" fill="#ffb300" stroke="#ffd54f" stroke-width="2" />
+            <path d="M42 35 L52 54 L42 58 L36 38 Z" fill="#5d4037" stroke="#3e2723" stroke-width="2" />
+            <rect x="10" y="24" width="7" height="4" fill="#ffd54f" />
+            <circle cx="38" cy="30" r="3.5" fill="#3e2723"/>
+          </svg>
+        `
+      },
+      {
+        id: 'whiskey',
+        name: 'Rượu Saloon',
+        color: 'text-yellow-400',
+        payout: 3.0,
+        weight: 11,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <rect x="29" y="10" width="10" height="9" rx="2" fill="#8d6e63" stroke="#d7ccc8" stroke-width="1.5"/>
+            <path d="M23 25 C16 34, 16 54, 23 58 L45 58 C52 54, 52 34, 45 25 Z" fill="#ff8f00" stroke="#ffe082" stroke-width="2" />
+            <rect x="25" y="36" width="18" height="13" rx="2" fill="#fff8e1" stroke="#ffb300" />
+            <text x="27.5" y="46" font-size="8" font-weight="900" fill="#3e2723" font-family="Cinzel">XXX</text>
+          </svg>
+        `
+      },
+      {
+        id: 'hat',
+        name: 'Mũ Stetson Tím',
+        color: 'text-purple-300',
+        payout: 2.2,
+        weight: 14,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <path d="M5 44 C18 35, 50 35, 63 44 C53 52, 15 52, 5 44 Z" fill="#9c27b0" stroke="#ea80fc" stroke-width="2" />
+            <path d="M21 40 C21 18, 47 18, 47 40 Z" fill="#6a1b9a" stroke="#ea80fc" stroke-width="2" />
+            <rect x="21" y="36" width="26" height="4" fill="#ffd54f" />
+          </svg>
+        `
+      },
+      {
+        id: 'A',
+        name: 'Quân A',
+        isRank: true,
+        payout: 1.2,
+        weight: 22,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet">
+            <rect x="8" y="8" width="52" height="52" rx="10" fill="#2d1309" stroke="#ef5350" stroke-width="2.5"/>
+            <text x="34" y="44" font-size="34" font-weight="900" fill="#ff5252" font-family="Cinzel" text-anchor="middle">A</text>
+          </svg>
+        `
+      },
+      {
+        id: 'K',
+        name: 'Quân K',
+        isRank: true,
+        payout: 1.0,
+        weight: 24,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet">
+            <rect x="8" y="8" width="52" height="52" rx="10" fill="#101c2e" stroke="#42a5f5" stroke-width="2.5"/>
+            <text x="34" y="44" font-size="34" font-weight="900" fill="#64b5f6" font-family="Cinzel" text-anchor="middle">K</text>
+          </svg>
+        `
+      },
+      {
+        id: 'Q',
+        name: 'Quân Q',
+        isRank: true,
+        payout: 0.8,
+        weight: 26,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet">
+            <rect x="8" y="8" width="52" height="52" rx="10" fill="#0d2417" stroke="#66bb6a" stroke-width="2.5"/>
+            <text x="34" y="44" font-size="34" font-weight="900" fill="#81c784" font-family="Cinzel" text-anchor="middle">Q</text>
+          </svg>
+        `
+      },
+      {
+        id: 'J',
+        name: 'Quân J',
+        isRank: true,
+        payout: 0.6,
+        weight: 28,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet">
+            <rect x="8" y="8" width="52" height="52" rx="10" fill="#2d2209" stroke="#ffa726" stroke-width="2.5"/>
+            <text x="34" y="44" font-size="34" font-weight="900" fill="#ffb74d" font-family="Cinzel" text-anchor="middle">J</text>
+          </svg>
+        `
+      },
+      {
+        id: 'wild',
+        name: 'WILD',
+        isWild: true,
+        color: 'text-yellow-300',
+        weight: 5,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <defs>
+              <linearGradient id="wildGradGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff9c4"/>
+                <stop offset="45%" stop-color="#fbc02d"/>
+                <stop offset="100%" stop-color="#e65100"/>
+              </linearGradient>
+            </defs>
+            <polygon points="34,4 42,24 64,24 46,38 52,60 34,46 16,60 22,38 4,24 26,24" fill="url(#wildGradGold)" stroke="#ffffff" stroke-width="2"/>
+            <rect x="15" y="45" width="38" height="15" rx="3" fill="#b71c1c" stroke="#ffe082" stroke-width="1.5"/>
+            <text x="34" y="56" font-size="9" font-weight="900" fill="#fff" font-family="Cinzel" text-anchor="middle" letter-spacing="1">WILD</text>
+          </svg>
+        `
+      },
+      {
+        id: 'scatter',
+        name: 'SCATTER',
+        isScatter: true,
+        color: 'text-yellow-100',
+        weight: 4,
+        renderSVG: () => `
+          <svg class="w-full h-full max-h-[82%] max-w-[90%] drop-shadow" viewBox="0 0 68 68" preserveAspectRatio="xMidYMid meet" fill="none">
+            <!-- 3D Gold Bars Stack -->
+            <polygon points="14,40 24,24 44,24 34,40" fill="#ffd54f" stroke="#ff8f00" stroke-width="1.5" />
+            <polygon points="34,40 44,24 54,24 44,40" fill="#ffb300" stroke="#ff8f00" stroke-width="1.5" />
+            <polygon points="22,50 32,34 52,34 42,50" fill="#ffe082" stroke="#ff8f00" stroke-width="1.5" />
+            <!-- Ornate SCATTER Plate -->
+            <rect x="8" y="48" width="52" height="14" rx="3" fill="#b71c1c" stroke="#ffd54f" stroke-width="1.5"/>
+            <text x="34" y="58.5" font-size="8.5" font-weight="900" fill="#ffe57f" font-family="Cinzel" text-anchor="middle" letter-spacing="1">SCATTER</text>
+          </svg>
+        `
+      }
+    ];
+  </script>
+
+  <script>
+    function formatVND(value) {
+      return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+        maximumFractionDigits: 0
+      }).format(Math.round(value));
+    }
+
+    /* Web Audio Synthesizer */
+    let isSoundEnabled = true;
+    let audioCtx = null;
+
+    function playAudio(type) {
+      if (!isSoundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'spin') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(140, now);
+          osc.frequency.exponentialRampToValueAtTime(320, now + 0.15);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        } else if (type === 'tumble') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(260, now + 0.12);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.start(now);
+          osc.stop(now + 0.14);
+        } else if (type === 'win') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523, now); // C5
+          osc.frequency.setValueAtTime(659, now + 0.08); // E5
+          osc.frequency.setValueAtTime(784, now + 0.15); // G5
+          osc.frequency.setValueAtTime(1046, now + 0.22); // C6
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.45);
+        } else if (type === 'jackpot') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.linearRampToValueAtTime(880, now + 0.3);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+          osc.start(now);
+          osc.stop(now + 0.6);
+        }
+      } catch (e) {
+        console.warn("Audio blocked or not supported:", e);
+      }
+    }
+
+    /* Three.js 3D Background & Gold Coin Rain */
+    let threeScene, threeCamera, threeRenderer, threeDustParticles;
+    const active3DCoins = [];
+
+    function initThreeScene() {
+      const canvas = document.getElementById('three-bg-canvas');
+      if (!canvas || !window.THREE) return;
+
+      threeScene = new THREE.Scene();
+      threeCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      threeCamera.position.z = 18;
+
+      threeRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      threeRenderer.setSize(window.innerWidth, window.innerHeight);
+      threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Saloon warm lighting
+      const ambientLight = new THREE.AmbientLight(0xffeedd, 0.9);
+      threeScene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffb300, 1.8);
+      dirLight.position.set(5, 10, 10);
+      threeScene.add(dirLight);
+
+      // Gold dust particles floating
+      const dustGeo = new THREE.BufferGeometry();
+      const count = 120;
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 35;
+        positions[i + 1] = (Math.random() - 0.5) * 35;
+        positions[i + 2] = (Math.random() - 0.5) * 15;
+      }
+      dustGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const dustMat = new THREE.PointsMaterial({
+        color: 0xffd54f,
+        size: 0.18,
+        transparent: true,
+        opacity: 0.65
+      });
+      threeDustParticles = new THREE.Points(dustGeo, dustMat);
+      threeScene.add(threeDustParticles);
+
+      window.addEventListener('resize', () => {
+        if (!threeCamera || !threeRenderer) return;
+        threeCamera.aspect = window.innerWidth / window.innerHeight;
+        threeCamera.updateProjectionMatrix();
+        threeRenderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      animateThreeLoop();
+    }
+
+    function trigger3DCoinRain(amount = 25) {
+      if (!threeScene || !window.THREE) return;
+      const coinGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.08, 16);
+      const coinMat = new THREE.MeshStandardMaterial({
+        color: 0xffc107,
+        metalness: 0.85,
+        roughness: 0.25
+      });
+
+      for (let i = 0; i < amount; i++) {
+        const coin = new THREE.Mesh(coinGeo, coinMat);
+        coin.position.set(
+          (Math.random() - 0.5) * 18,
+          10 + Math.random() * 5,
+          (Math.random() - 0.5) * 6
+        );
+        coin.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+        coin.userData = {
+          vy: -(0.18 + Math.random() * 0.25),
+          vx: (Math.random() - 0.5) * 0.08,
+          rx: (Math.random() - 0.5) * 0.15,
+          ry: (Math.random() - 0.5) * 0.15
+        };
+        threeScene.add(coin);
+        active3DCoins.push(coin);
+      }
+    }
+
+    function animateThreeLoop() {
+      requestAnimationFrame(animateThreeLoop);
+      if (threeDustParticles) {
+        threeDustParticles.rotation.y += 0.0008;
+      }
+
+      for (let i = active3DCoins.length - 1; i >= 0; i--) {
+        const c = active3DCoins[i];
+        c.position.y += c.userData.vy;
+        c.position.x += c.userData.vx;
+        c.rotation.x += c.userData.rx;
+        c.rotation.y += c.userData.ry;
+
+        if (c.position.y < -12) {
+          threeScene.remove(c);
+          active3DCoins.splice(i, 1);
+        }
+      }
+
+      if (threeRenderer && threeScene && threeCamera) {
+        threeRenderer.render(threeScene, threeCamera);
+      }
+    }
+  </script>
+
+  <script>
+    const COLS = 5;
+    const ROWS = 4;
+    let grid = []; // 5 cols x 4 rows
+    let isSpinning = false;
+    let isTurbo = false;
+    let isAuto = false;
+
+    // Betting levels (VND)
+    const BET_LEVELS = [5000, 10000, 20000, 50000, 100000, 200000, 500000];
+    let currentBetIndex = 2; // Default 20.000 VND
+
+    // Balances and multipliers
+    let balance = 1000000;
+    let currentSpinWin = 0;
+    let totalSessionWin = 0;
+
+    // Multiplier steps [x1, x2, x4, x8, x16, x32]
+    const MULTIPLIERS = [1, 2, 4, 8, 16, 32];
+    let cascadeStep = 0;
+
+    // Free Spins
+    let freeSpinsLeft = 0;
+
+    // Admin & RTP parameters
+    let systemRTP = 96;
+    let jackpotPool = 50000000;
+    let scatterRate = 'normal'; // 'rare', 'normal', 'easy'
+    let forceJackpotNextSpin = false;
+
+    // User accounts memory
+    const localUsersDb = {
+      'admin': { password: '123', role: 'admin', balance: 10000000 },
+      'player': { password: '123', role: 'user', balance: 1000000 }
+    };
+    let currentUser = null;
+
+    // Giftcode database
+    const localGiftcodesDb = {
+      'VIP777': { reward: 5000000, active: true },
+      'WILD999': { reward: 10000000, active: true },
+      'NOHU2026': { reward: 2000000, active: true }
+    };
+    const redeemedCodes = [];
+
+    // Google Sheets API Adapter
+    const GAS_APP_URL = "";
+    async function callGasApi(action, payload = {}) {
+      if (GAS_APP_URL && GAS_APP_URL.startsWith("http")) {
+        try {
+          const resp = await fetch(GAS_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload })
+          });
+          return await resp.json();
+        } catch (e) {
+          console.warn("GAS Sheet fallback to memory:", e);
+        }
+      }
+      return mockGasApi(action, payload);
+    }
+
+    function mockGasApi(action, payload) {
+      if (action === 'login') {
+        const u = localUsersDb[payload.username];
+        if (u && String(u.password) === String(payload.password)) {
+          return { status: 'ok', username: payload.username, role: u.role, balance: u.balance };
+        }
+        return { status: 'error', message: 'Tên đăng nhập hoặc mật khẩu không chính xác' };
+      }
+      if (action === 'register') {
+        if (localUsersDb[payload.username]) {
+          return { status: 'error', message: 'Tài khoản đã tồn tại trên hệ thống' };
+        }
+        const role = payload.username.toLowerCase() === 'admin' ? 'admin' : 'user';
+        localUsersDb[payload.username] = { password: payload.password, role: role, balance: 1000000 };
+        return { status: 'ok', username: payload.username, role: role, balance: 1000000 };
+      }
+      if (action === 'updateBalance') {
+        if (localUsersDb[payload.username]) {
+          localUsersDb[payload.username].balance = payload.balance;
+        }
+        return { status: 'ok' };
+      }
+      if (action === 'getUsers') {
+        const list = Object.keys(localUsersDb).map(uname => ({
+          username: uname,
+          role: localUsersDb[uname].role,
+          balance: localUsersDb[uname].balance
+        }));
+        return { status: 'ok', users: list };
+      }
+      return { status: 'ok' };
+    }
+  </script>
+
+  <script>
+    function getRandomSymbol() {
+      let totalWeight = SYMBOLS.reduce((sum, s) => {
+        let w = s.weight;
+        if (s.isScatter) {
+          if (scatterRate === 'rare') w = 1;
+          if (scatterRate === 'easy') w = 15;
+        }
+        return sum + w;
+      }, 0);
+
+      let r = Math.random() * totalWeight;
+      for (let s of SYMBOLS) {
+        let w = s.weight;
+        if (s.isScatter) {
+          if (scatterRate === 'rare') w = 1;
+          if (scatterRate === 'easy') w = 15;
+        }
+        if (r < w) return s;
+        r -= w;
+      }
+      return SYMBOLS[0];
+    }
+
+    function initReelMatrix() {
+      const container = document.getElementById('reels-grid');
+      if (!container) return;
+      container.innerHTML = '';
+      grid = [];
+
+      for (let col = 0; col < COLS; col++) {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'flex flex-col justify-between h-full gap-1 min-h-0 w-full';
+        colDiv.id = `reel-col-${col}`;
+        
+        grid[col] = [];
+        for (let row = 0; row < ROWS; row++) {
+          const sym = getRandomSymbol();
+          grid[col][row] = sym;
+
+          const cell = createSymbolCell(sym, col, row);
+          colDiv.appendChild(cell);
+        }
+        container.appendChild(colDiv);
+      }
+    }
+
+    function createSymbolCell(sym, col, row) {
+      const cell = document.createElement('div');
+      cell.id = `cell-${col}-${row}`;
+      cell.className = `slot-cell flex-1 min-h-0 rounded-lg border border-saloon-woodBorder/80 bg-gradient-to-b from-[#241309] to-[#120803] flex items-center justify-center p-1 relative shadow-inner overflow-hidden`;
+      cell.innerHTML = sym.renderSVG();
+      return cell;
+    }
+
+    function updateMultipliersUI() {
+      const activeMult = MULTIPLIERS[Math.min(cascadeStep, MULTIPLIERS.length - 1)];
+      const banner = document.getElementById('mult-banner-active');
+      if (banner) banner.textContent = `x${activeMult}`;
+
+      document.querySelectorAll('.mult-step').forEach(el => {
+        const s = parseInt(el.getAttribute('data-step'));
+        const stepMult = MULTIPLIERS[s];
+        if (stepMult === activeMult) {
+          el.className = 'golden-plaque px-2.5 py-0.5 rounded-md text-black font-black text-xs sm:text-sm western-font transform scale-110 shadow-xl transition-all duration-200 animate-pulse';
+        } else {
+          el.className = 'mult-step px-1 py-0.2 rounded font-mono font-bold text-[9px] sm:text-[10px] text-stone-400 transition';
+        }
+      });
+    }
+
+    function updateBalancesUI() {
+      const playerBal = document.getElementById('player-balance-display');
+      const playerBet = document.getElementById('player-bet-display');
+      const currentWin = document.getElementById('current-spin-win-display');
+      const totalWin = document.getElementById('total-win-display');
+      const poolDisplay = document.getElementById('jackpot-pool-display');
+      const adminJackpotLabel = document.getElementById('admin-jackpot-label');
+      const adminBal = document.getElementById('admin-my-balance');
+
+      if (playerBal) playerBal.textContent = formatVND(balance);
+      if (playerBet) playerBet.textContent = formatVND(BET_LEVELS[currentBetIndex]);
+      if (currentWin) currentWin.textContent = formatVND(currentSpinWin);
+      if (totalWin) totalWin.textContent = formatVND(totalSessionWin);
+      if (poolDisplay) poolDisplay.textContent = formatVND(jackpotPool);
+      if (adminJackpotLabel) adminJackpotLabel.textContent = formatVND(jackpotPool);
+      if (adminBal) adminBal.textContent = formatVND(balance);
+    }
+  </script>
+
+  <script>
+    function checkWinningWays() {
+      const winningLines = [];
+      const symbolsToCheck = SYMBOLS.filter(s => !s.isScatter && !s.isWild);
+
+      for (let s of symbolsToCheck) {
+        let matchCols = 0;
+        let positionsInCols = [];
+
+        for (let col = 0; col < COLS; col++) {
+          let rowsMatched = [];
+          for (let row = 0; row < ROWS; row++) {
+            const current = grid[col][row];
+            if (current && (current.id === s.id || current.isWild)) {
+              rowsMatched.push(row);
+            }
+          }
+          if (rowsMatched.length > 0) {
+            matchCols++;
+            positionsInCols.push({ col, rows: rowsMatched });
+          } else {
+            break; // Dãy liên tục phải từ cột 0 sang phải
+          }
+        }
+
+        if (matchCols >= 3) {
+          let ways = positionsInCols.reduce((acc, c) => acc * c.rows.length, 1);
+          winningLines.push({
+            symbol: s,
+            matchCols: matchCols,
+            ways: ways,
+            positions: positionsInCols
+          });
+        }
+      }
+
+      // Kiểm tra Scatter thỏi vàng
+      let scatterCount = 0;
+      let scatterPositions = [];
+      for (let c = 0; c < COLS; c++) {
+        for (let r = 0; r < ROWS; r++) {
+          if (grid[c][r] && grid[c][r].isScatter) {
+            scatterCount++;
+            scatterPositions.push({ col: c, row: r });
+          }
+        }
+      }
+
+      return { winningLines, scatterCount, scatterPositions };
+    }
+  </script>
+
+  <script>
+    async function startSpin() {
+      if (isSpinning) return;
+
+      const bet = BET_LEVELS[currentBetIndex];
+
+      // Khấu trừ tiền cược nếu không trong lượt Free Spin
+      if (freeSpinsLeft <= 0) {
+        if (balance < bet) {
+          showToast("Số dư không đủ! Hãy dùng Giftcode hoặc nạp vốn.", "warning");
+          stopAutoSpin();
+          return;
+        }
+        balance -= bet;
+        jackpotPool += Math.round(bet * 0.02);
+      } else {
+        freeSpinsLeft--;
+        const fsBadge = document.getElementById('fs-count');
+        if (fsBadge) fsBadge.textContent = freeSpinsLeft;
+        if (freeSpinsLeft <= 0) {
+          const fsTag = document.getElementById('free-spin-tag');
+          if (fsTag) fsTag.classList.add('hidden');
+        }
+      }
+
+      isSpinning = true;
+      currentSpinWin = 0;
+      cascadeStep = 0;
+      updateMultipliersUI();
+      updateBalancesUI();
+
+      const spinIcon = document.getElementById('spin-main-icon');
+      if (spinIcon) spinIcon.classList.add('animate-spin');
+      playAudio('spin');
+
+      // Admin ép Nổ Hũ
+      if (forceJackpotNextSpin) {
+        forceJackpotNextSpin = false;
+        await triggerJackpotExplosion();
+        if (spinIcon) spinIcon.classList.remove('animate-spin');
+        isSpinning = false;
+        return;
+      }
+
+      // Hiệu ứng mờ cột khi quay
+      const spinDuration = isTurbo ? 140 : 280;
+      await animateSpinColumns(spinDuration);
+
+      // Cập nhật ma trận mới
+      for (let c = 0; c < COLS; c++) {
+        for (let r = 0; r < ROWS; r++) {
+          grid[c][r] = getRandomSymbol();
+        }
+      }
+      renderCurrentGrid();
+
+      // Vòng lặp Cascading Tumble nổ liên hoàn
+      let hasWin = true;
+      while (hasWin) {
+        const { winningLines, scatterCount } = checkWinningWays();
+
+        // Mở Free Spins nếu từ 3 Scatter trở lên
+        if (scatterCount >= 3 && freeSpinsLeft <= 0) {
+          triggerFreeSpinsAward(scatterCount * 3 + 1);
+        }
+
+        if (winningLines.length > 0) {
+          playAudio('tumble');
+          cascadeStep = Math.min(cascadeStep + 1, MULTIPLIERS.length - 1);
+          updateMultipliersUI();
+
+          const activeMult = MULTIPLIERS[cascadeStep];
+          let stepPayout = 0;
+
+          // Đánh dấu hiệu ứng nổ cho ô trúng thưởng
+          for (let win of winningLines) {
+            const lineWin = (win.symbol.payout * bet * (win.ways / 12)) * activeMult;
+            stepPayout += lineWin;
+
+            win.positions.forEach(p => {
+              p.rows.forEach(r => {
+                const el = document.getElementById(`cell-${p.col}-${r}`);
+                if (el) {
+                  el.classList.add('slot-cell-win', 'slot-cell-explode');
+                }
+              });
+            });
+          }
+
+          // Giật nòng 2 khẩu súng
+          recoilGuns();
+
+          currentSpinWin += Math.round(stepPayout);
+          totalSessionWin += Math.round(stepPayout);
+          balance += Math.round(stepPayout);
+
+          updateBalancesUI();
+          triggerWinFlash();
+          playAudio('win');
+
+          // Mưa tiền xu 3D khi hệ số nhân đạt mốc cao
+          if (activeMult >= 4) {
+            trigger3DCoinRain(18);
+          }
+
+          await sleep(isTurbo ? 220 : 400);
+
+          // Rơi và bù đắp biểu tượng mới
+          dropNewSymbols(winningLines);
+          renderCurrentGrid();
+          await sleep(isTurbo ? 180 : 300);
+        } else {
+          hasWin = false;
+        }
+      }
+
+      if (spinIcon) spinIcon.classList.remove('animate-spin');
+      isSpinning = false;
+
+      // Đồng bộ số dư lên server/sheet
+      if (currentUser) {
+        callGasApi('updateBalance', { username: currentUser.username, balance: balance });
+      }
+
+      // Lặp lại nếu Auto Spin đang bật
+      if (isAuto && balance >= BET_LEVELS[currentBetIndex]) {
+        setTimeout(startSpin, isTurbo ? 260 : 650);
+      } else if (isAuto && balance < BET_LEVELS[currentBetIndex]) {
+        stopAutoSpin();
+        showToast("Đã dừng tự động quay do hết số dư!", "warning");
+      }
+    }
+
+    function renderCurrentGrid() {
+      for (let col = 0; col < COLS; col++) {
+        const colDiv = document.getElementById(`reel-col-${col}`);
+        if (!colDiv) continue;
+        colDiv.innerHTML = '';
+        for (let row = 0; row < ROWS; row++) {
+          const sym = grid[col][row];
+          const cell = createSymbolCell(sym, col, row);
+          cell.classList.add('slot-cell-drop');
+          colDiv.appendChild(cell);
+        }
+      }
+    }
+
+    async function animateSpinColumns(duration) {
+      for (let c = 0; c < COLS; c++) {
+        const colDiv = document.getElementById(`reel-col-${c}`);
+        if (colDiv) colDiv.classList.add('opacity-40', 'blur-[1.5px]', 'transform', 'scale-95');
+      }
+      await sleep(duration);
+      for (let c = 0; c < COLS; c++) {
+        const colDiv = document.getElementById(`reel-col-${c}`);
+        if (colDiv) colDiv.classList.remove('opacity-40', 'blur-[1.5px]', 'transform', 'scale-95');
+      }
+    }
+
+    function dropNewSymbols(winningLines) {
+      const explodedMap = {};
+      winningLines.forEach(w => {
+        w.positions.forEach(p => {
+          if (!explodedMap[p.col]) explodedMap[p.col] = new Set();
+          p.rows.forEach(r => explodedMap[p.col].add(r));
+        });
+      });
+
+      for (let c = 0; c < COLS; c++) {
+        if (!explodedMap[c]) continue;
+        const remaining = [];
+        for (let r = 0; r < ROWS; r++) {
+          if (!explodedMap[c].has(r)) {
+            remaining.push(grid[c][r]);
+          }
+        }
+        while (remaining.length < ROWS) {
+          remaining.unshift(getRandomSymbol());
+        }
+        grid[c] = remaining;
+      }
+    }
+
+    function recoilGuns() {
+      const gL = document.getElementById('gun-left');
+      const gR = document.getElementById('gun-right');
+      if (gL) {
+        gL.classList.remove('gun-recoil-left');
+        void gL.offsetWidth;
+        gL.classList.add('gun-recoil-left');
+      }
+      if (gR) {
+        gR.classList.remove('gun-recoil-right');
+        void gR.offsetWidth;
+        gR.classList.add('gun-recoil-right');
+      }
+    }
+
+    function triggerWinFlash() {
+      const flash = document.getElementById('win-flash-overlay');
+      if (!flash) return;
+      flash.classList.remove('opacity-0');
+      flash.classList.add('opacity-100');
+      setTimeout(() => {
+        flash.classList.remove('opacity-100');
+        flash.classList.add('opacity-0');
+      }, 160);
+    }
+
+    function triggerFreeSpinsAward(count) {
+      freeSpinsLeft += count;
+      const splash = document.getElementById('bonus-splash');
+      const desc = document.getElementById('bonus-desc');
+      const fsCountBadge = document.getElementById('fs-count');
+      const fsTag = document.getElementById('free-spin-tag');
+
+      if (desc) desc.textContent = `BẠN ĐÃ MỞ KHÓA ${count} LƯỢT QUAY MIỄN PHÍ VỚI HỆ SỐ CỰC ĐẠI!`;
+      if (splash) splash.classList.remove('hidden');
+      if (fsTag) fsTag.classList.remove('hidden');
+      if (fsCountBadge) fsCountBadge.textContent = freeSpinsLeft;
+      playAudio('jackpot');
+    }
+
+    const btnStartBonus = document.getElementById('btn-start-bonus');
+    if (btnStartBonus) {
+      btnStartBonus.addEventListener('click', () => {
+        const splash = document.getElementById('bonus-splash');
+        if (splash) splash.classList.add('hidden');
+      });
+    }
+
+    async function triggerJackpotExplosion() {
+      const wonAmt = jackpotPool;
+      balance += wonAmt;
+      jackpotPool = 20000000;
+
+      const wonAmountEl = document.getElementById('jackpot-won-amount');
+      const winModal = document.getElementById('jackpot-win-modal');
+      if (wonAmountEl) wonAmountEl.textContent = formatVND(wonAmt);
+      if (winModal) winModal.classList.remove('hidden');
+      playAudio('jackpot');
+
+      trigger3DCoinRain(75);
+
+      if (window.confetti) {
+        confetti({ particleCount: 160, spread: 90, origin: { y: 0.6 } });
+      }
+
+      updateBalancesUI();
+      showToast(`CHÚC MỪNG NỔ HŨ: ${formatVND(wonAmt)}!`, "success");
+    }
+
+    const btnCollectJackpot = document.getElementById('btn-collect-jackpot');
+    if (btnCollectJackpot) {
+      btnCollectJackpot.addEventListener('click', () => {
+        const winModal = document.getElementById('jackpot-win-modal');
+        if (winModal) winModal.classList.add('hidden');
+      });
+    }
+  </script>
+
+  <script>
+    function toggleTurbo() {
+      isTurbo = !isTurbo;
+      const btn = document.getElementById('btn-toggle-turbo');
+      const icon = document.getElementById('turbo-icon');
+      if (btn && icon) {
+        if (isTurbo) {
+          btn.classList.add('bg-amber-400', 'text-black', 'border-yellow-200');
+          icon.className = 'fa-solid fa-bolt text-xs mb-0.5 text-black animate-pulse';
+          showToast("Đã bật chế độ Turbo siêu tốc", "info");
+        } else {
+          btn.classList.remove('bg-amber-400', 'text-black', 'border-yellow-200');
+          icon.className = 'fa-solid fa-bolt text-xs mb-0.5';
+          showToast("Đã tắt Turbo", "info");
+        }
+      }
+    }
+
+    function toggleAutoSpin() {
+      if (isAuto) {
+        stopAutoSpin();
+      } else {
+        isAuto = true;
+        const btn = document.getElementById('btn-toggle-auto');
+        const icon = document.getElementById('auto-icon');
+        const label = document.getElementById('auto-label');
+        if (btn) btn.classList.add('bg-amber-400', 'text-black', 'border-yellow-200');
+        if (icon) icon.className = 'fa-solid fa-stop text-xs mb-0.5 text-black';
+        if (label) label.textContent = 'DỪNG';
+        showToast("Bắt đầu tự động quay...", "info");
+        startSpin();
+      }
+    }
+
+    function stopAutoSpin() {
+      isAuto = false;
+      const btn = document.getElementById('btn-toggle-auto');
+      const icon = document.getElementById('auto-icon');
+      const label = document.getElementById('auto-label');
+      if (btn) btn.classList.remove('bg-amber-400', 'text-black', 'border-yellow-200');
+      if (icon) icon.className = 'fa-solid fa-play text-xs mb-0.5';
+      if (label) label.textContent = 'AUTO';
+    }
+
+    // Bet Minus/Plus
+    const btnBetMinus = document.getElementById('btn-bet-minus');
+    if (btnBetMinus) {
+      btnBetMinus.addEventListener('click', () => {
+        if (currentBetIndex > 0) {
+          currentBetIndex--;
+          updateBalancesUI();
+        }
+      });
+    }
+
+    const btnBetPlus = document.getElementById('btn-bet-plus');
+    if (btnBetPlus) {
+      btnBetPlus.addEventListener('click', () => {
+        if (currentBetIndex < BET_LEVELS.length - 1) {
+          currentBetIndex++;
+          updateBalancesUI();
+        }
+      });
+    }
+
+    const btnSpinAction = document.getElementById('btn-spin-action');
+    if (btnSpinAction) {
+      btnSpinAction.addEventListener('click', () => startSpin());
+    }
+
+    const btnToggleTurbo = document.getElementById('btn-toggle-turbo');
+    if (btnToggleTurbo) {
+      btnToggleTurbo.addEventListener('click', toggleTurbo);
+    }
+
+    const btnToggleAuto = document.getElementById('btn-toggle-auto');
+    if (btnToggleAuto) {
+      btnToggleAuto.addEventListener('click', toggleAutoSpin);
+    }
+
+    // Sound Toggle
+    const btnToggleSound = document.getElementById('btn-toggle-sound');
+    if (btnToggleSound) {
+      btnToggleSound.addEventListener('click', () => {
+        isSoundEnabled = !isSoundEnabled;
+        const icon = document.getElementById('sound-icon');
+        if (icon) {
+          if (isSoundEnabled) {
+            icon.className = 'fa-solid fa-volume-high text-saloon-gold';
+            showToast("Đã bật âm thanh", "info");
+          } else {
+            icon.className = 'fa-solid fa-volume-xmark text-stone-500';
+            showToast("Đã tắt âm thanh", "info");
+          }
+        }
+      });
+    }
+
+    // Popup Giftcode sau 60 giây
+    setTimeout(() => {
+      const p60 = document.getElementById('popup-giftcode-60s');
+      if (p60) {
+        p60.classList.remove('hidden');
+        playAudio('win');
+      }
+    }, 60000);
+
+    const btnClose60s = document.getElementById('btn-close-60s-popup');
+    if (btnClose60s) {
+      btnClose60s.addEventListener('click', () => {
+        const p60 = document.getElementById('popup-giftcode-60s');
+        if (p60) p60.classList.add('hidden');
+      });
+    }
+
+    const btnClaim60s = document.getElementById('btn-claim-60s-code');
+    if (btnClaim60s) {
+      btnClaim60s.addEventListener('click', () => {
+        const p60 = document.getElementById('popup-giftcode-60s');
+        if (p60) p60.classList.add('hidden');
+        redeemCode('VIP777');
+      });
+    }
+
+    // Giftcode Modal
+    const btnOpenGiftcode = document.getElementById('btn-open-giftcode');
+    if (btnOpenGiftcode) {
+      btnOpenGiftcode.addEventListener('click', () => {
+        const m = document.getElementById('giftcode-modal');
+        if (m) m.classList.remove('hidden');
+      });
+    }
+
+    const btnCloseGiftcode = document.getElementById('btn-close-giftcode');
+    if (btnCloseGiftcode) {
+      btnCloseGiftcode.addEventListener('click', () => {
+        const m = document.getElementById('giftcode-modal');
+        if (m) m.classList.add('hidden');
+      });
+    }
+
+    document.querySelectorAll('.btn-fill-code').forEach(b => {
+      b.addEventListener('click', (e) => {
+        const input = document.getElementById('input-giftcode');
+        if (input) input.value = e.currentTarget.getAttribute('data-code');
+      });
+    });
+
+    const giftcodeForm = document.getElementById('giftcode-form');
+    if (giftcodeForm) {
+      giftcodeForm.addEventListener('submit', () => {
+        const input = document.getElementById('input-giftcode');
+        const code = input ? input.value.trim().toUpperCase() : '';
+        redeemCode(code);
+      });
+    }
+
+    function redeemCode(code) {
+      if (!code) {
+        showToast("Vui lòng nhập mã Giftcode!", "warning");
+        return;
+      }
+      if (redeemedCodes.includes(code)) {
+        showToast("Bạn đã nhận mã Giftcode này rồi!", "warning");
+        return;
+      }
+      const gift = localGiftcodesDb[code];
+      if (!gift || !gift.active) {
+        showToast("Mã Giftcode không tồn tại hoặc đã hết hạn!", "error");
+        return;
+      }
+
+      redeemedCodes.push(code);
+      balance += gift.reward;
+      updateBalancesUI();
+      playAudio('win');
+      trigger3DCoinRain(22);
+      
+      const modal = document.getElementById('giftcode-modal');
+      const input = document.getElementById('input-giftcode');
+      if (modal) modal.classList.add('hidden');
+      if (input) input.value = '';
+      showToast(`Nhận thành công ${formatVND(gift.reward)} vào ví!`, "success");
+
+      if (currentUser) {
+        callGasApi('updateBalance', { username: currentUser.username, balance: balance });
+      }
+    }
+  </script>
+
+  <script>
+    let authMode = 'login';
+    const tabAuthLogin = document.getElementById('tab-auth-login');
+    const tabAuthRegister = document.getElementById('tab-auth-register');
+
+    if (tabAuthLogin && tabAuthRegister) {
+      tabAuthLogin.addEventListener('click', () => {
+        authMode = 'login';
+        tabAuthLogin.className = 'py-1.5 rounded-lg bg-saloon-woodLight text-saloon-gold font-bold transition';
+        tabAuthRegister.className = 'py-1.5 rounded-lg text-stone-400 hover:text-white transition';
+      });
+
+      tabAuthRegister.addEventListener('click', () => {
+        authMode = 'register';
+        tabAuthRegister.className = 'py-1.5 rounded-lg bg-saloon-woodLight text-emerald-400 font-bold transition';
+        tabAuthLogin.className = 'py-1.5 rounded-lg text-stone-400 hover:text-white transition';
+      });
+    }
+
+    const btnOpenAuth = document.getElementById('btn-open-auth');
+    if (btnOpenAuth) {
+      btnOpenAuth.addEventListener('click', () => {
+        const m = document.getElementById('auth-modal');
+        if (m) m.classList.remove('hidden');
+      });
+    }
+
+    const btnCloseAuth = document.getElementById('btn-close-auth');
+    if (btnCloseAuth) {
+      btnCloseAuth.addEventListener('click', () => {
+        const m = document.getElementById('auth-modal');
+        if (m) m.classList.add('hidden');
+      });
+    }
+
+    const authForm = document.getElementById('auth-form');
+    if (authForm) {
+      authForm.addEventListener('submit', async () => {
+        const usernameInput = document.getElementById('auth-username');
+        const passwordInput = document.getElementById('auth-password');
+        const username = usernameInput ? usernameInput.value.trim() : '';
+        const password = passwordInput ? passwordInput.value.trim() : '';
+
+        if (!username || !password) {
+          showToast("Vui lòng điền đủ thông tin!", "warning");
+          return;
+        }
+
+        const res = await callGasApi(authMode, { username, password });
+        if (res && res.status === 'ok') {
+          setUserSession({
+            username: res.username,
+            role: res.role,
+            balance: res.balance
+          });
+          const m = document.getElementById('auth-modal');
+          if (m) m.classList.add('hidden');
+          if (usernameInput) usernameInput.value = '';
+          if (passwordInput) passwordInput.value = '';
+          showToast(`Đăng nhập thành công! Chào ${res.username}`, "success");
+        } else {
+          showToast(res.message || "Xác thực thất bại!", "error");
+        }
+      });
+    }
+
+    function setUserSession(user) {
+      currentUser = user;
+      const btnOpenAuth = document.getElementById('btn-open-auth');
+      const userBox = document.getElementById('user-logged-box');
+      const nameTag = document.getElementById('user-name-tag');
+      const roleBadge = document.getElementById('user-role-badge');
+      const btnAdmin = document.getElementById('btn-open-admin');
+
+      if (user) {
+        balance = user.balance;
+        if (btnOpenAuth) btnOpenAuth.classList.add('hidden');
+        if (userBox) { userBox.classList.remove('hidden'); userBox.classList.add('flex'); }
+        if (nameTag) nameTag.textContent = user.username;
+        if (roleBadge) roleBadge.textContent = user.role.toUpperCase();
+
+        if (user.role === 'admin') {
+          if (btnAdmin) { btnAdmin.classList.remove('hidden'); btnAdmin.classList.add('flex'); }
+          if (roleBadge) roleBadge.className = 'text-[9px] px-1 rounded bg-amber-400 text-black font-bold';
+        } else {
+          if (btnAdmin) { btnAdmin.classList.add('hidden'); btnAdmin.classList.remove('flex'); }
+        }
+      } else {
+        if (btnOpenAuth) btnOpenAuth.classList.remove('hidden');
+        if (userBox) { userBox.classList.add('hidden'); userBox.classList.remove('flex'); }
+        if (btnAdmin) { btnAdmin.classList.add('hidden'); btnAdmin.classList.remove('flex'); }
+      }
+      updateBalancesUI();
+    }
+
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => {
+        setUserSession(null);
+        showToast("Đã đăng xuất tài khoản", "info");
+      });
+    }
+
+    // Admin Dashboard Events
+    const btnOpenAdmin = document.getElementById('btn-open-admin');
+    if (btnOpenAdmin) {
+      btnOpenAdmin.addEventListener('click', () => {
+        const m = document.getElementById('admin-modal');
+        const inputJackpot = document.getElementById('input-admin-jackpot');
+        if (m) m.classList.remove('hidden');
+        if (inputJackpot) inputJackpot.value = jackpotPool;
+        loadAdminUsersList();
+      });
+    }
+
+    const btnCloseAdmin = document.getElementById('btn-close-admin');
+    if (btnCloseAdmin) {
+      btnCloseAdmin.addEventListener('click', () => {
+        const m = document.getElementById('admin-modal');
+        if (m) m.classList.add('hidden');
+      });
+    }
+
+    const tabAdminGame = document.getElementById('tab-admin-gameplay');
+    const tabAdminUser = document.getElementById('tab-admin-users');
+    const viewAdminGame = document.getElementById('admin-view-gameplay');
+    const viewAdminUser = document.getElementById('admin-view-users');
+
+    if (tabAdminGame && tabAdminUser && viewAdminGame && viewAdminUser) {
+      tabAdminGame.addEventListener('click', () => {
+        tabAdminGame.className = 'py-1.5 rounded-lg bg-saloon-woodLight text-saloon-gold font-bold';
+        tabAdminUser.className = 'py-1.5 rounded-lg text-stone-400 hover:text-white';
+        viewAdminGame.classList.remove('hidden');
+        viewAdminUser.classList.add('hidden');
+      });
+
+      tabAdminUser.addEventListener('click', () => {
+        tabAdminUser.className = 'py-1.5 rounded-lg bg-saloon-woodLight text-saloon-gold font-bold';
+        tabAdminGame.className = 'py-1.5 rounded-lg text-stone-400 hover:text-white';
+        viewAdminUser.classList.remove('hidden');
+        viewAdminGame.classList.add('hidden');
+        loadAdminUsersList();
+      });
+    }
+
+    const btnSaveJackpot = document.getElementById('btn-save-jackpot-val');
+    if (btnSaveJackpot) {
+      btnSaveJackpot.addEventListener('click', () => {
+        const input = document.getElementById('input-admin-jackpot');
+        const v = input ? parseFloat(input.value) : 0;
+        if (v > 0) {
+          jackpotPool = v;
+          updateBalancesUI();
+          showToast(`Đã đổi Hũ Vàng thành ${formatVND(v)}!`, "success");
+        }
+      });
+    }
+
+    const inputAdminRtp = document.getElementById('input-admin-rtp');
+    if (inputAdminRtp) {
+      inputAdminRtp.addEventListener('input', (e) => {
+        systemRTP = parseInt(e.target.value);
+        const label = document.getElementById('admin-rtp-label');
+        if (label) label.textContent = `${systemRTP}%`;
+      });
+    }
+
+    const selectAdminScatter = document.getElementById('select-admin-scatter');
+    if (selectAdminScatter) {
+      selectAdminScatter.addEventListener('change', (e) => {
+        scatterRate = e.target.value;
+        showToast(`Đã đổi tần suất Scatter: ${scatterRate.toUpperCase()}`, "info");
+      });
+    }
+
+    const btnForceJackpot = document.getElementById('btn-force-jackpot');
+    if (btnForceJackpot) {
+      btnForceJackpot.addEventListener('click', () => {
+        forceJackpotNextSpin = true;
+        const m = document.getElementById('admin-modal');
+        if (m) m.classList.add('hidden');
+        showToast("Lệnh đã nhận! Lượt quay kế tiếp chắc chắn Nổ Hũ Jackpot!", "warning");
+      });
+    }
+
+    document.querySelectorAll('.btn-admin-add-cap').forEach(b => {
+      b.addEventListener('click', (e) => {
+        const amt = parseFloat(e.currentTarget.getAttribute('data-amt'));
+        balance = Math.max(0, balance + amt);
+        updateBalancesUI();
+        showToast(`Admin đã điều chỉnh: ${amt > 0 ? '+' : ''}${formatVND(amt)}`, "success");
+      });
+    });
+
+    async function loadAdminUsersList() {
+      const tbody = document.getElementById('admin-users-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-stone-400">Đang tải...</td></tr>';
+
+      const res = await callGasApi('getUsers');
+      if (res && res.status === 'ok') {
+        tbody.innerHTML = '';
+        res.users.forEach(u => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-saloon-woodLight/30';
+          tr.innerHTML = `
+            <td class="p-2 font-bold text-white">${u.username}</td>
+            <td class="p-2 text-[10px] text-amber-300">${u.role.toUpperCase()}</td>
+            <td class="p-2 text-right font-bold text-emerald-400">${formatVND(u.balance)}</td>
+            <td class="p-2 text-center">
+              <button class="px-2 py-0.5 rounded bg-saloon-woodLight hover:bg-amber-400 hover:text-black text-[10px] font-bold text-amber-300" onclick="quickEditUserBalance('${u.username}')">
+                Sửa Vốn
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    window.quickEditUserBalance = function(uname) {
+      const currentBal = localUsersDb[uname] ? localUsersDb[uname].balance : 1000000;
+      const val = parseInt(currentBal) + 5000000;
+      if (localUsersDb[uname]) localUsersDb[uname].balance = val;
+      if (currentUser && currentUser.username === uname) {
+        balance = val;
+        updateBalancesUI();
+      }
+      loadAdminUsersList();
+      showToast(`Đã cộng thêm +5.000.000 ₫ cho ${uname}`, "success");
+    };
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      let icon = '<i class="fa-solid fa-circle-info text-sky-400"></i>';
+      let border = 'border-saloon-woodBorder';
+      if (type === 'success') { icon = '<i class="fa-solid fa-circle-check text-emerald-400"></i>'; border = 'border-emerald-500/50'; }
+      if (type === 'warning') { icon = '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>'; border = 'border-amber-500/50'; }
+      if (type === 'error') { icon = '<i class="fa-solid fa-circle-xmark text-rose-400"></i>'; border = 'border-rose-500/50'; }
+
+      toast.className = `bg-saloon-dark/95 border ${border} text-white px-3 py-2 rounded-xl shadow-2xl text-xs flex items-center space-x-2 backdrop-blur transition-all duration-300`;
+      toast.innerHTML = `${icon}<span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Khởi tạo ứng dụng hoàn chỉnh
+    window.addEventListener('DOMContentLoaded', () => {
+      initThreeScene();
+      initReelMatrix();
+      updateMultipliersUI();
+      updateBalancesUI();
+      setUserSession(null);
+    });
+  </script>
+</body>
+</html>
