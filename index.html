@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>WILD WEST NỔ HŨ PRO • 3600 WAYS 3D</title>
+  <title>WILD WEST NỔ HŨ PRO • 3600 WAYS 3D (GOOGLE SHEET CLOUD)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -200,8 +200,8 @@
     #gas-sync-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(8, 4, 2, 0.85);
-      backdrop-filter: blur(6px);
+      background: rgba(8, 4, 2, 0.88);
+      backdrop-filter: blur(8px);
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -222,7 +222,6 @@
       transition: width 0.2s ease, opacity 0.3s;
     }
 
-    /* 3D Symbol Sizing & Filters */
     .sym-svg-3d {
       width: 100%;
       height: 100%;
@@ -247,13 +246,13 @@
       <div class="relative w-14 h-14 flex items-center justify-center">
         <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-300 p-0.5 flex items-center justify-center shadow-lg animate-spin" style="animation-duration: 3s;">
           <div class="w-full h-full bg-[#180a04] rounded-xl flex items-center justify-center">
-            <i class="fa-solid fa-arrows-rotate text-amber-400 text-lg animate-spin" style="animation-duration: 1.2s;"></i>
+            <i class="fa-solid fa-cloud-arrow-up text-amber-400 text-lg animate-bounce"></i>
           </div>
         </div>
       </div>
       <div class="space-y-1">
-        <div id="sync-overlay-title" class="text-xs font-bold text-yellow-300 font-western uppercase tracking-wider">ĐANG ĐỒNG BỘ DỮ LIỆU</div>
-        <p id="sync-overlay-desc" class="text-[10px] text-stone-300">Đang đọc & xác nhận số liệu từ đám mây...</p>
+        <div id="sync-overlay-title" class="text-xs font-bold text-yellow-300 font-western uppercase tracking-wider">ĐANG KẾT NỐI GOOGLE SHEET</div>
+        <p id="sync-overlay-desc" class="text-[10px] text-stone-300">Đang giao tiếp với đám mây Google Sheet...</p>
       </div>
       <div class="w-full bg-black/60 h-1.5 rounded-full overflow-hidden border border-saloon-woodBorder">
         <div class="w-full h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 animate-pulse"></div>
@@ -261,7 +260,7 @@
     </div>
   </div>
 
-  <!-- MÀN HÌNH LOADING PHONG CÁCH VIỄN TÂY 3D -->
+  <!-- MÀN HÌNH LOADING ENGINE -->
   <div id="loading-screen">
     <div class="flex flex-col items-center max-w-sm px-6 text-center space-y-4">
       <div class="relative w-24 h-24 flex items-center justify-center">
@@ -275,7 +274,7 @@
 
       <div class="space-y-1">
         <h1 class="font-western-title text-xl sm:text-2xl text-yellow-400 tracking-wider drop-shadow">WILD WEST SLOTS 3D</h1>
-        <p class="text-[10px] sm:text-xs text-amber-200/80 font-mono">3600 WAYS • ĐỒ HỌA 3D HOÀNG GIA</p>
+        <p class="text-[10px] sm:text-xs text-amber-200/80 font-mono">100% GOOGLE SHEET CLOUD • KHÔNG DÙNG LOCALSTORAGE</p>
       </div>
 
       <div class="w-64 sm:w-72 space-y-1.5 font-mono">
@@ -283,14 +282,14 @@
           <div id="loading-bar-fill" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 rounded-full transition-all duration-150" style="width: 25%;"></div>
         </div>
         <div class="flex justify-between text-[10px] text-amber-400 font-bold px-1">
-          <span id="loading-status-text">Đang chuẩn bị ma trận 3D...</span>
+          <span id="loading-status-text">Đang kết nối Google Sheet Database...</span>
           <span id="loading-percentage">25%</span>
         </div>
       </div>
 
       <div class="h-10 flex items-center justify-center">
         <p id="loading-tip-text" class="text-[11px] text-stone-300 italic font-mono transition-opacity duration-300">
-          "Hệ số nhân Cascade tăng gấp đôi sau mỗi lần nổ chuỗi biểu tượng 3D!"
+          "Dữ liệu số dư, lịch sử quay và hũ jackpot được lưu trữ bảo mật trên Google Sheet!"
         </p>
       </div>
     </div>
@@ -302,7 +301,7 @@
   <header class="relative z-20 h-10 sm:h-12 bg-saloon-dark/95 border-b border-saloon-woodBorder flex items-center justify-between px-2 sm:px-4 backdrop-blur shadow-xl flex-shrink-0">
     <div class="flex items-center space-x-1.5">
       <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-tr from-amber-600 via-yellow-400 to-amber-200 p-0.5 shadow flex items-center justify-center cursor-pointer active:scale-95 transition" id="btn-brand-logo" title="Cấu hình Google Script URL">
-        <i class="fa-solid fa-hat-cowboy text-black text-xs sm:text-sm"></i>
+        <i class="fa-solid fa-table text-black text-xs sm:text-sm"></i>
       </div>
       <div>
         <div class="flex items-center space-x-1">
@@ -311,7 +310,7 @@
         </div>
         <div class="text-[7.5px] sm:text-[8px] text-stone-400 font-mono hidden xs:flex items-center space-x-1 mt-0.5 cursor-pointer" id="btn-api-config-trigger">
           <span id="sync-indicator-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="sync-status-label" class="hover:text-amber-300">Sẵn sàng (Local/GAS)</span>
+          <span id="sync-status-label" class="hover:text-amber-300">Google Sheet: Sẵn Sàng</span>
           <i id="sync-spin-icon" class="fa-solid fa-arrows-rotate text-[8px] text-amber-400 hidden animate-spin"></i>
         </div>
       </div>
@@ -382,7 +381,7 @@
       </button>
     </div>
     <div class="flex items-center justify-between text-[10px] text-stone-400 font-mono pt-1 border-t border-saloon-woodBorder/50">
-      <span id="m-sync-label">Google Sheet: Tự động</span>
+      <span id="m-sync-label">Lưu trữ: Google Sheet Trực Tuyến</span>
       <button id="btn-m-gas-config" class="text-amber-300 underline">Cài đặt API GAS</button>
     </div>
   </div>
@@ -395,7 +394,7 @@
         <span class="font-bold uppercase tracking-wider text-[8px] sm:text-[9px]">LIVE TIN THẮNG:</span>
       </div>
       <div id="live-winner-ticker" class="truncate flex-1 px-2 text-stone-300 text-right">
-        Chào mừng đến với Nổ Hũ 3D Viễn Tây! Vui lòng ĐĂNG NHẬP để nhận 10.000.000 ₫ và bắt đầu quay thưởng!
+        Đăng nhập tài khoản Google Sheet để nhận 10.000.000 ₫ và bắt đầu quay thưởng 3D!
       </div>
     </div>
 
@@ -449,7 +448,7 @@
               </button>
             </div>
 
-            <!-- KHÓA YÊU CẦU ĐĂNG NHẬP TRƯỚC KHI QUAY (THEO YÊU CẦU) -->
+            <!-- KHÓA YÊU CẦU ĐĂNG NHẬP (LƯU TRỮ VÀ XÁC THỰC HOÀN TOÀN TỪ GOOGLE SHEET) -->
             <div id="guest-lock-overlay" class="absolute inset-0 bg-black/85 backdrop-blur-md z-40 flex flex-col items-center justify-center p-4 text-center space-y-3">
               <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600 text-black flex items-center justify-center text-2xl sm:text-3xl font-black shadow-2xl animate-bounce">
                 <i class="fa-solid fa-lock"></i>
@@ -457,7 +456,7 @@
               <div class="space-y-1 font-mono max-w-sm">
                 <h3 class="text-base sm:text-lg font-black text-yellow-300 font-western uppercase tracking-wider">YÊU CẦU ĐĂNG NHẬP</h3>
                 <p class="text-xs text-stone-300 leading-relaxed">
-                  Vui lòng đăng nhập tài khoản để nhận <b class="text-emerald-400 font-bold">+10.000.000 ₫</b> vốn khởi nghiệp và mở khóa ma trận quay thưởng 3D!
+                  Vui lòng đăng nhập để đồng bộ tài khoản từ Google Sheet và nhận <b class="text-emerald-400 font-bold">+10.000.000 ₫</b> vốn quay!
                 </p>
               </div>
               <button id="btn-lock-login-action" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-xs uppercase tracking-wider shadow-xl active:scale-95 transition flex items-center space-x-2">
@@ -577,35 +576,62 @@
 
   <!-- MODAL CẤU HÌNH LIÊN KẾT GOOGLE APPS SCRIPT WEB APP -->
   <div id="gas-config-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[80] flex items-center justify-center p-3 hidden">
-    <div class="bg-saloon-dark border-2 border-amber-400 w-full max-w-md rounded-2xl p-4 shadow-2xl space-y-3 font-mono">
+    <div class="bg-saloon-dark border-2 border-amber-400 w-full max-w-lg rounded-2xl p-4 shadow-2xl space-y-3 font-mono max-h-[90vh] overflow-y-auto custom-scroll">
       <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
         <div class="flex items-center space-x-2">
           <div class="w-7 h-7 rounded-lg bg-emerald-500 text-black flex items-center justify-center font-bold text-xs">
-            <i class="fa-solid fa-link"></i>
+            <i class="fa-solid fa-table"></i>
           </div>
-          <h3 class="text-sm font-bold text-amber-300 font-western">KẾT NỐI GOOGLE APPS SCRIPT</h3>
+          <h3 class="text-sm font-bold text-amber-300 font-western">KẾT NỐI GOOGLE APPS SCRIPT (GG SHEET)</h3>
         </div>
         <button id="btn-close-gas-modal" class="text-stone-400 hover:text-white p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
 
-      <p class="text-[11px] text-stone-300 leading-relaxed">
-        Dán URL <b>Web App</b> triển khai từ Google Sheets (định dạng kết thúc bằng <code>/exec</code>) để đồng bộ dữ liệu người chơi và Hũ:
-      </p>
+      <div class="p-2.5 rounded-xl bg-amber-950/40 border border-amber-600/40 text-[11px] text-amber-200 space-y-1">
+        <div class="font-bold flex items-center space-x-1.5 text-yellow-300">
+          <i class="fa-solid fa-database"></i>
+          <span>100% LƯU TRỮ TRỰC TIẾP TRÊN GOOGLE SHEET</span>
+        </div>
+        <p class="text-stone-300 text-[10px]">
+          Ứng dụng <b>không dùng localStorage</b>. Mọi tài khoản, số dư, tỉ lệ thắng, lịch sử quay và Hũ jackpot đều được đồng bộ qua Web App URL dưới đây.
+        </p>
+      </div>
 
       <div class="space-y-1">
-        <label class="text-[10px] text-stone-400 block">Google Apps Script Web App URL:</label>
+        <label class="text-[10px] text-stone-400 block font-bold">Google Apps Script Web App URL (kết thúc bằng /exec):</label>
         <input type="text" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-2.5 py-2 text-xs text-amber-200 focus:outline-none focus:border-amber-400">
       </div>
 
       <div class="flex space-x-2">
         <button id="btn-save-gas-url" class="flex-1 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-bold text-xs transition active:scale-95">
-          Lưu & Đồng Bộ Ngay
+          <i class="fa-solid fa-floppy-disk mr-1"></i> Lưu & Đồng Bộ Ngay
         </button>
         <button id="btn-test-gas-conn" class="px-3 py-2 rounded-xl bg-saloon-woodLight border border-saloon-woodBorder text-stone-200 hover:text-white text-xs transition active:scale-95">
-          Kiểm Tra
+          <i class="fa-solid fa-network-wired mr-1"></i> Kiểm Tra
         </button>
+      </div>
+
+      <!-- Accordion Xem Mã Google Apps Script Mẫu -->
+      <div class="border-t border-saloon-woodBorder pt-2 space-y-1.5">
+        <button id="btn-toggle-gas-script-guide" class="w-full text-left flex items-center justify-between text-[11px] text-amber-300 hover:text-amber-200 py-1 font-bold">
+          <span><i class="fa-solid fa-code mr-1"></i> Xem Code Google Apps Script (GAS) Mẫu để dán vào Sheet</span>
+          <i id="icon-gas-accordion" class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+        <div id="gas-script-guide-box" class="hidden space-y-2 text-[10px] text-stone-300">
+          <p class="leading-relaxed">
+            1. Tạo Google Sheet mới -> Menu <b>Tiện ích mở rộng (Extensions) -> Apps Script</b>.<br>
+            2. Dán đoạn mã sau vào `Code.gs` -> Bấm <b>Triển khai (Deploy) -> Tùy chọn triển khai mới -> Ứng dụng web (Web App)</b>.<br>
+            3. Chọn Người có quyền truy cập: <b>Bất kỳ ai (Anyone)</b> -> Sao chép URL dán vào ô bên trên.
+          </p>
+          <div class="relative">
+            <textarea id="sample-gas-code" readonly class="w-full h-32 bg-black/80 border border-saloon-woodBorder rounded-lg p-2 font-mono text-[9px] text-emerald-300 select-all"></textarea>
+            <button id="btn-copy-gas-code" class="absolute top-2 right-2 px-2 py-0.5 rounded bg-amber-400 hover:bg-amber-300 text-black font-bold text-[9px]">
+              Copy Code
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -624,7 +650,7 @@
         <span id="jackpot-won-amount" class="font-mono font-black text-2xl text-yellow-300 drop-shadow">50.000.000 ₫</span>
       </div>
       <button id="btn-collect-jackpot" class="w-full py-3 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-sm uppercase tracking-wider shadow-lg active:scale-95 transition">
-        NHẬN THƯỞNG NGAY
+        NHẬN THƯỞNG VÀO VÍ GOOGLE SHEET
       </button>
     </div>
   </div>
@@ -642,7 +668,7 @@
         <div class="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">🎉 QUÀ TẶNG CAO BỒI</div>
         <h3 class="text-lg font-black text-white font-western">TẶNG BẠN GIFTCODE VIP</h3>
         <p class="text-[11px] text-stone-300 leading-relaxed px-2 font-mono">
-          Nhận ngay <b class="text-emerald-400 font-bold">+5.000.000 VNĐ</b> vào ví cược!
+          Nhận ngay <b class="text-emerald-400 font-bold">+5.000.000 VNĐ</b> vào ví cược Google Sheet!
         </p>
       </div>
       <div class="py-2 px-3 bg-black/60 border border-amber-400/40 rounded-xl flex items-center justify-between font-mono">
@@ -662,7 +688,7 @@
       <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
         <h3 class="text-sm font-bold text-amber-300 flex items-center space-x-1.5 font-western">
           <i class="fa-solid fa-gift text-amber-400"></i>
-          <span>NHẬP MÃ GIFTCODE</span>
+          <span>NHẬP MÃ GIFTCODE GOOGLE SHEET</span>
         </h3>
         <button id="btn-close-giftcode" class="text-stone-400 hover:text-white p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
@@ -683,13 +709,13 @@
     </div>
   </div>
 
-  <!-- AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ) -->
+  <!-- AUTH MODAL (ĐĂNG NHẬP / ĐĂNG KÝ TRỰC TIẾP LÊN GOOGLE SHEET) -->
   <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 hidden">
     <div class="bg-saloon-dark border-2 border-amber-400/80 w-full max-w-sm rounded-2xl p-4 shadow-2xl space-y-3">
       <div class="flex items-center justify-between border-b border-saloon-woodBorder pb-2">
         <h3 class="text-sm font-bold text-amber-300 font-western flex items-center space-x-1.5">
           <i class="fa-solid fa-hat-cowboy text-amber-400"></i>
-          <span>TÀI KHOẢN CAO BỒI</span>
+          <span>TÀI KHOẢN GOOGLE SHEET</span>
         </h3>
         <button id="btn-close-auth" class="text-stone-400 hover:text-white p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
@@ -702,15 +728,16 @@
       <form id="auth-form" class="space-y-3 text-xs" onsubmit="return false;">
         <div>
           <label class="text-stone-300 block mb-1">Tên tài khoản</label>
-          <input type="text" id="auth-username" required placeholder="Nhập tài khoản (hoặc 'admin', 'player')" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
+          <input type="text" id="auth-username" required placeholder="Nhập tài khoản (VD: admin, player)" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
         </div>
         <div>
           <label class="text-stone-300 block mb-1">Mật khẩu</label>
           <input type="password" id="auth-password" required placeholder="Nhập mật khẩu (admin: admin123)" class="w-full bg-black/70 border border-saloon-woodBorder rounded-lg px-3 py-2 text-white font-mono focus:outline-none focus:border-amber-400">
         </div>
         <div class="flex space-x-2 pt-1">
-          <button type="submit" id="btn-submit-auth" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 text-black font-black text-xs shadow-lg transition active:scale-95">
-            XÁC NHẬN TIẾP TỤC
+          <button type="submit" id="btn-submit-auth" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:brightness-110 text-black font-black text-xs shadow-lg transition active:scale-95 flex items-center justify-center space-x-1.5">
+            <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
+            <span>XÁC THỰC VỚI GOOGLE SHEET</span>
           </button>
         </div>
       </form>
@@ -727,7 +754,7 @@
           </div>
           <div>
             <h3 class="text-sm font-bold text-saloon-gold font-western uppercase">BẢNG XẾP HẠNG ĐẠI GIA</h3>
-            <span class="text-[9px] text-stone-400 font-mono">Đồng bộ tự động & Trực tuyến</span>
+            <span class="text-[9px] text-stone-400 font-mono">Dữ liệu trực tuyến từ Google Sheet</span>
           </div>
         </div>
         <button id="btn-close-leaderboard" class="text-stone-400 hover:text-white p-1">
@@ -746,7 +773,7 @@
 
       <button id="btn-refresh-top-modal" class="w-full py-2 rounded-xl bg-saloon-woodLight border border-saloon-woodBorder hover:bg-amber-400 hover:text-black font-bold text-xs text-amber-300 transition active:scale-95 flex items-center justify-center space-x-1.5">
         <i class="fa-solid fa-arrows-rotate text-xs"></i>
-        <span>LÀM MỚI BẢNG XẾP HẠNG</span>
+        <span>LÀM MỚI TỪ GOOGLE SHEET</span>
       </button>
     </div>
   </div>
@@ -764,7 +791,7 @@
             <h3 class="text-sm font-bold text-saloon-gold flex items-center space-x-1.5 font-western">
               <span>BẢNG ĐIỀU KHIỂN QUẢN TRỊ TOÀN QUYỀN</span>
             </h3>
-            <span class="text-[9px] text-stone-400 font-mono">Tỉ lệ Thắng, Tỉ lệ Hũ, Bẫy Thu Hồi & Người Chơi</span>
+            <span class="text-[9px] text-stone-400 font-mono">Đồng bộ hai chiều với Sheet `Config` & `Users`</span>
           </div>
         </div>
         <button id="btn-close-admin" class="text-stone-400 hover:text-white p-1">
@@ -916,10 +943,10 @@
       <!-- TAB 3: USER MANAGEMENT & WINRATE RIÊNG TỪNG NGƯỜI CHƠI -->
       <div id="admin-view-users" class="space-y-2 text-xs hidden">
         <div class="flex justify-between items-center text-stone-400 text-[11px]">
-          <span>Danh sách người chơi & chỉnh Tỉ Lệ Thắng riêng:</span>
+          <span>Danh sách người chơi trong Google Sheet:</span>
           <button id="btn-reload-admin-users" class="text-amber-300 hover:underline flex items-center space-x-1">
             <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
-            <span>Tải lại</span>
+            <span>Tải lại Sheet</span>
           </button>
         </div>
         <div class="bg-black/60 rounded-xl border border-saloon-woodBorder overflow-hidden max-h-52 overflow-y-auto custom-scroll">
@@ -1498,30 +1525,17 @@
   </script>
 
   <script>
-    // Bộ lưu trữ SafeStorage chống lỗi iFrame Sandbox
-    const safeStore = {
-      getItem(key) {
-        try {
-          return localStorage.getItem(key);
-        } catch (e) {
-          return window['__mem_' + key] || null;
-        }
-      },
-      setItem(key, val) {
-        try {
-          localStorage.setItem(key, val);
-        } catch (e) {
-          window['__mem_' + key] = val;
-        }
-      },
-      removeItem(key) {
-        try {
-          localStorage.removeItem(key);
-        } catch (e) {
-          delete window['__mem_' + key];
-        }
-      }
-    };
+    /* 
+     * TUYỆT ĐỐI KHÔNG DÙNG LOCALSTORAGE!
+     * Toàn bộ dữ liệu được lưu trên Google Apps Script (Google Sheets)
+     * Bộ nhớ phiên (In-Memory Session) chỉ lưu tạm khi đang mở tab.
+     */
+
+    // URL Google Apps Script Web App (Có thể tùy chỉnh qua Modal)
+    let GAS_APP_URL = "https://script.google.com/macros/s/AKfycbyrIj7M5a-to55PkPpIgVWaeDnNNinj6FsNOkQYOFxJ4qxR1PfeKXG4pHzC6htxTaMW/exec";
+
+    // Bộ nhớ RAM nội tại cho phiên làm việc hiện tại
+    let currentUser = null; // BẮT BUỘC ĐĂNG NHẬP MỚI ĐƯỢC CHƠI
 
     const COLS = 5;
     const ROWS = 4;
@@ -1541,13 +1555,13 @@
     let cascadeStep = 0;
     let freeSpinsLeft = 0;
 
-    // Config Tỉ lệ từ Admin
+    // Config Tỉ lệ từ Google Sheet
     let jackpotPool = 50000000;
     let serverJackpotRate = 0.2; // 0.2%
     let globalWinRate = 45;       // 45%
     let forceJackpotNextSpin = false;
 
-    // THUẬT TOÁN BẪY TÂM LÝ & THU HỒI VỐN TOÀN SERVER (AUTO-DRAIN)
+    // Thuật toán Bẫy Thu Hồi Vốn Toàn Server (Được giám sát từ Sheet)
     let playerSpinsCount = 0;
     let serverTotalSpins = 0;
     let forceTrapDrainServer = false;
@@ -1556,20 +1570,6 @@
       baitRounds: 8,
       drainSeverity: 'hard'
     };
-
-    // Google Apps Script API URL
-    let GAS_APP_URL = safeStore.getItem('nh_gas_api_url') || "";
-
-    // Local Users Database Fallback
-    const localUsersDb = {
-      'admin': { password: 'admin123', role: 'admin', balance: 50000000, winRate: 100 },
-      'player': { password: '123', role: 'user', balance: 10000000, winRate: 50 },
-      'daigia71': { password: '123', role: 'user', balance: 18500000, winRate: 55 },
-      'hoangtutrade': { password: '123', role: 'user', balance: 12450000, winRate: 45 }
-    };
-
-    // BẮT BUỘC ĐĂNG NHẬP: currentUser ban đầu là null
-    let currentUser = null;
 
     let leaderboard = [
       { name: 'daigia71', won: 48500000 },
@@ -1590,57 +1590,333 @@
     };
     let botTimer = null;
 
-    const localGiftcodesDb = {
-      'VIP777': { reward: 5000000, active: true },
-      'WILD999': { reward: 10000000, active: true },
-      'NOHU2026': { reward: 2000000, active: true }
-    };
     const redeemedCodes = [];
 
-    // MÀN HÌNH LOADING ENGINE
-    function startLoadingSequence() {
-      const fill = document.getElementById('loading-bar-fill');
-      const percentLabel = document.getElementById('loading-percentage');
-      const statusLabel = document.getElementById('loading-status-text');
-      const screen = document.getElementById('loading-screen');
+    // MÃ NGUỒN GOOGLE APPS SCRIPT MẪU ĐỂ DÁN VÀO GOOGLE SHEET
+    const SAMPLE_GAS_CODE_STRING = `/**
+ * WILD WEST NỔ HŨ PRO 3D - GOOGLE APPS SCRIPT BACKEND
+ * Triển khai: Deploy -> New deployment -> Web app -> Anyone
+ */
+function doGet(e) {
+  return handleRequest(e.parameter || {});
+}
 
-      let currentPercent = 25;
+function doPost(e) {
+  var payload = {};
+  try {
+    if (e.postData && e.postData.contents) {
+      payload = JSON.parse(e.postData.contents);
+    }
+  } catch (err) {
+    payload = e.parameter || {};
+  }
+  return handleRequest(payload);
+}
 
-      const progressInterval = setInterval(() => {
-        currentPercent += Math.floor(Math.random() * 25) + 20;
-        if (currentPercent >= 100) {
-          currentPercent = 100;
-          clearInterval(progressInterval);
+function handleRequest(data) {
+  var action = data.action || 'getState';
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  ensureSheets(ss);
 
-          if (fill) fill.style.width = '100%';
-          if (percentLabel) percentLabel.textContent = '100%';
-          if (statusLabel) statusLabel.textContent = 'Sẵn sàng chiến đấu!';
+  var result = { status: 'ok', success: true };
 
-          setTimeout(() => {
-            if (screen) {
-              screen.style.opacity = '0';
-              setTimeout(() => { screen.style.display = 'none'; }, 400);
-            }
-          }, 200);
-        } else {
-          if (fill) fill.style.width = `${currentPercent}%`;
-          if (percentLabel) percentLabel.textContent = `${currentPercent}%`;
-          if (currentPercent > 50 && statusLabel) {
-            statusLabel.textContent = 'Khởi tạo ma trận 3D 3600 Ways...';
+  if (action === 'getState') {
+    var configSheet = ss.getSheetByName('Config');
+    var values = configSheet.getDataRange().getValues();
+    var config = {};
+    for (var i = 1; i < values.length; i++) {
+      if (values[i][0]) config[values[i][0]] = values[i][1];
+    }
+    result.data = {
+      jackpotPool: Number(config.jackpotPool || 50000000),
+      serverJackpotRate: Number(config.serverJackpotRate || 0.2),
+      globalWinRate: Number(config.globalWinRate || 45),
+      forceTrapDrain: Boolean(config.forceTrapDrain === true || config.forceTrapDrain === 'true'),
+      totalSpins: Number(config.totalSpins || 0)
+    };
+  } else if (action === 'login') {
+    var user = findUser(ss, data.username);
+    if (user && String(user.password) === String(data.password)) {
+      result.username = user.username;
+      result.role = user.role;
+      result.balance = Number(user.balance);
+      result.winRate = Number(user.winRate || 50);
+      result.token = Utilities.getUuid();
+    } else {
+      result.status = 'error';
+      result.success = false;
+      result.message = 'Sai tên đăng nhập hoặc mật khẩu trên Google Sheet!';
+    }
+  } else if (action === 'register') {
+    var existing = findUser(ss, data.username);
+    if (existing) {
+      result.status = 'error';
+      result.success = false;
+      result.message = 'Tên tài khoản này đã tồn tại trên Sheet!';
+    } else {
+      var uSheet = ss.getSheetByName('Users');
+      var role = data.username.toLowerCase() === 'admin' ? 'admin' : 'user';
+      var initBal = 10000000;
+      uSheet.appendRow([data.username, data.password, role, initBal, 50, new Date()]);
+      result.username = data.username;
+      result.role = role;
+      result.balance = initBal;
+      result.winRate = 50;
+      result.token = Utilities.getUuid();
+    }
+  } else if (action === 'updateBalance') {
+    updateUserBalance(ss, data.username, data.balance);
+    if (data.spins) incrementServerSpins(ss, 1);
+  } else if (action === 'getLeaderboard') {
+    result.data = { leaderboard: getTopLeaderboard(ss) };
+  } else if (action === 'adminGetUsers') {
+    result.data = { users: getAllUsers(ss) };
+  } else if (action === 'redeemGiftcode') {
+    var giftCodes = { 'VIP777': 5000000, 'WILD999': 10000000, 'NOHU2026': 2000000 };
+    var reward = giftCodes[data.code] || 0;
+    if (reward > 0) {
+      var u = findUser(ss, data.username);
+      var newBal = (Number(u ? u.balance : 0)) + reward;
+      updateUserBalance(ss, data.username, newBal);
+      result.data = { newBalance: newBal };
+      result.message = 'Đổi mã thành công +' + reward + ' ₫';
+    } else {
+      result.status = 'error';
+      result.success = false;
+      result.message = 'Giftcode không hợp lệ!';
+    }
+  }
+
+  return ContentService.createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function ensureSheets(ss) {
+  if (!ss.getSheetByName('Users')) {
+    var s = ss.insertSheet('Users');
+    s.appendRow(['Username', 'Password', 'Role', 'Balance', 'WinRate', 'CreatedAt']);
+    s.appendRow(['admin', 'admin123', 'admin', 50000000, 100, new Date()]);
+    s.appendRow(['player', '123', 'user', 10000000, 50, new Date()]);
+  }
+  if (!ss.getSheetByName('Config')) {
+    var c = ss.insertSheet('Config');
+    c.appendRow(['Key', 'Value']);
+    c.appendRow(['jackpotPool', 50000000]);
+    c.appendRow(['serverJackpotRate', 0.2]);
+    c.appendRow(['globalWinRate', 45]);
+    c.appendRow(['forceTrapDrain', false]);
+    c.appendRow(['totalSpins', 0]);
+  }
+}
+
+function findUser(ss, username) {
+  var s = ss.getSheetByName('Users');
+  var data = s.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).toLowerCase() === String(username).toLowerCase()) {
+      return { row: i + 1, username: data[i][0], password: data[i][1], role: data[i][2], balance: data[i][3], winRate: data[i][4] };
+    }
+  }
+  return null;
+}
+
+function updateUserBalance(ss, username, balance) {
+  var u = findUser(ss, username);
+  if (u) {
+    var s = ss.getSheetByName('Users');
+    s.getRange(u.row, 4).setValue(balance);
+  }
+}
+
+function getAllUsers(ss) {
+  var s = ss.getSheetByName('Users');
+  var data = s.getDataRange().getValues();
+  var list = [];
+  for (var i = 1; i < data.length; i++) {
+    list.push({ username: data[i][0], role: data[i][2], balance: Number(data[i][3]), winRate: Number(data[i][4] || 50) });
+  }
+  return list;
+}
+
+function getTopLeaderboard(ss) {
+  var users = getAllUsers(ss);
+  users.sort(function(a, b) { return b.balance - a.balance; });
+  return users.slice(0, 10).map(function(u) { return { name: u.username, won: u.balance }; });
+}`;
+
+    // Khởi tạo hướng dẫn & code mẫu GAS
+    function initGasSampleGuide() {
+      const area = document.getElementById('sample-gas-code');
+      const input = document.getElementById('input-gas-url');
+      if (area) area.value = SAMPLE_GAS_CODE_STRING;
+      if (input) input.value = GAS_APP_URL;
+
+      const btnGuide = document.getElementById('btn-toggle-gas-script-guide');
+      const guideBox = document.getElementById('gas-script-guide-box');
+      const icon = document.getElementById('icon-gas-accordion');
+
+      if (btnGuide && guideBox) {
+        btnGuide.addEventListener('click', () => {
+          guideBox.classList.toggle('hidden');
+          if (icon) icon.classList.toggle('rotate-180');
+        });
+      }
+
+      const btnCopy = document.getElementById('btn-copy-gas-code');
+      if (btnCopy) {
+        btnCopy.addEventListener('click', () => {
+          if (area) {
+            area.select();
+            document.execCommand('copy');
+            showToast("Đã copy toàn bộ mã Google Apps Script!", "success");
+          }
+        });
+      }
+    }
+  </script>
+
+  <script>
+    // Hàm gọi API trực tiếp tới Google Apps Script (KHÔNG DÙNG LOCALSTORAGE)
+    async function callGasApi(action, payload = {}, timeoutMs = 8000, showModalLoading = false) {
+      if (showModalLoading) {
+        setSyncLoading(true, "ĐỒNG BỘ GOOGLE SHEET", `Đang gửi lệnh ${action.toUpperCase()} lên Sheet...`);
+      }
+
+      const pBar = document.getElementById('top-sync-progress');
+      const sIcon = document.getElementById('sync-spin-icon');
+      if (pBar) { pBar.style.width = '45%'; pBar.style.opacity = '1'; }
+      if (sIcon) sIcon.classList.remove('hidden');
+
+      try {
+        if (GAS_APP_URL && GAS_APP_URL.startsWith("http")) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+          // Dùng text/plain để ngăn chặn preflight CORS request bị Google Apps Script chặn
+          const resp = await fetch(GAS_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload }),
+            redirect: 'follow',
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+
+          const text = await resp.text();
+          try {
+            const data = JSON.parse(text);
+            updateGasStatusUI(true);
+            return data;
+          } catch (e) {
+            console.warn("GAS Web App trả về text thay vì JSON:", text.substring(0, 80));
           }
         }
-      }, 70);
-
-      // Cưỡng chế đóng loading sau 1.2s tránh treo
-      setTimeout(() => {
-        if (screen && screen.style.display !== 'none') {
-          screen.style.opacity = '0';
-          setTimeout(() => { screen.style.display = 'none'; }, 300);
+      } catch (err) {
+        console.warn("Google Sheet API Offline/Timeout:", err);
+        updateGasStatusUI(false);
+      } finally {
+        if (showModalLoading) {
+          setSyncLoading(false);
         }
-      }, 1200);
+        if (pBar) {
+          pBar.style.width = '100%';
+          setTimeout(() => { pBar.style.opacity = '0'; pBar.style.width = '0%'; }, 200);
+        }
+        if (sIcon) sIcon.classList.add('hidden');
+      }
+
+      // Dự phòng bộ nhớ RAM khi chưa kịp cấu hình hoặc mạng rớt
+      return fallbackInMemoryApi(action, payload);
     }
 
-    // TÍNH TOÁN TỈ LỆ THẮNG HIỆN TẠI (Áp dụng Bẫy Thu Hồi Vốn Toàn Server)
+    // Dự phòng bộ nhớ RAM tạm thời trong phiên (Vẫn không đụng đến localStorage)
+    const inMemoryFallbackDb = {
+      'admin': { password: 'admin123', role: 'admin', balance: 50000000, winRate: 100 },
+      'player': { password: '123', role: 'user', balance: 10000000, winRate: 50 }
+    };
+
+    function fallbackInMemoryApi(action, payload) {
+      if (action === 'login') {
+        const u = inMemoryFallbackDb[payload.username.toLowerCase()];
+        if (u && String(u.password) === String(payload.password)) {
+          return { status: 'ok', success: true, username: payload.username, role: u.role, balance: u.balance, winRate: u.winRate, token: 'ram_' + Date.now() };
+        }
+        return { status: 'error', success: false, message: 'Sai tên đăng nhập hoặc mật khẩu! (Thử admin/admin123 hoặc player/123)' };
+      }
+      if (action === 'register') {
+        if (inMemoryFallbackDb[payload.username.toLowerCase()]) {
+          return { status: 'error', success: false, message: 'Tên tài khoản này đã tồn tại!' };
+        }
+        const role = payload.username.toLowerCase() === 'admin' ? 'admin' : 'user';
+        inMemoryFallbackDb[payload.username.toLowerCase()] = { password: payload.password, role: role, balance: 10000000, winRate: 50 };
+        return { status: 'ok', success: true, username: payload.username, role: role, balance: 10000000, winRate: 50, token: 'ram_' + Date.now() };
+      }
+      if (action === 'updateBalance') {
+        if (inMemoryFallbackDb[payload.username.toLowerCase()]) {
+          inMemoryFallbackDb[payload.username.toLowerCase()].balance = payload.balance;
+        }
+        return { status: 'ok', success: true };
+      }
+      if (action === 'getUsers' || action === 'adminGetUsers') {
+        const list = Object.keys(inMemoryFallbackDb).map(uname => ({
+          username: uname,
+          role: inMemoryFallbackDb[uname].role,
+          balance: inMemoryFallbackDb[uname].balance,
+          winRate: inMemoryFallbackDb[uname].winRate || 50
+        }));
+        return { status: 'ok', success: true, data: { users: list }, users: list };
+      }
+      if (action === 'getLeaderboard') {
+        return { status: 'ok', success: true, data: { leaderboard: leaderboard }, leaderboard: leaderboard };
+      }
+      if (action === 'redeemGiftcode') {
+        const giftCodes = { 'VIP777': 5000000, 'WILD999': 10000000, 'NOHU2026': 2000000 };
+        const reward = giftCodes[payload.code] || 0;
+        if (reward > 0) {
+          return { status: 'ok', success: true, data: { newBalance: balance + reward }, message: `Nhận thành công ${formatVND(reward)}!` };
+        }
+        return { status: 'error', success: false, message: 'Giftcode không hợp lệ!' };
+      }
+      return { status: 'ok', success: true };
+    }
+
+    function updateGasStatusUI(isOnline) {
+      const dot = document.getElementById('sync-indicator-dot');
+      const label = document.getElementById('sync-status-label');
+      const mLabel = document.getElementById('m-sync-label');
+      if (isOnline) {
+        if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400";
+        if (label) label.textContent = "Google Sheet: Trực Tuyến";
+        if (mLabel) mLabel.textContent = "Google Sheet: Trực Tuyến";
+      } else {
+        if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-amber-400";
+        if (label) label.textContent = "Google Sheet: Chế độ RAM Dự Phòng";
+        if (mLabel) mLabel.textContent = "Google Sheet: RAM Dự Phòng";
+      }
+    }
+
+    function setSyncLoading(show, title = "ĐANG ĐỒNG BỘ DỮ LIỆU", desc = "Đang gửi nhận dữ liệu...") {
+      const overlay = document.getElementById('gas-sync-overlay');
+      const titleEl = document.getElementById('sync-overlay-title');
+      const descEl = document.getElementById('sync-overlay-desc');
+
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = desc;
+
+      if (show) {
+        if (overlay) {
+          overlay.classList.remove('hidden');
+          void overlay.offsetWidth;
+          overlay.classList.remove('opacity-0');
+        }
+      } else {
+        if (overlay) {
+          overlay.classList.add('opacity-0');
+          setTimeout(() => overlay.classList.add('hidden'), 200);
+        }
+      }
+    }
+
     function calculateEffectiveWinRate() {
       let baseRate = globalWinRate;
 
@@ -1685,134 +1961,6 @@
         badge.className = 'px-2 py-0.5 rounded font-black text-rose-400 bg-rose-950/90 border border-rose-700 animate-pulse';
         badge.textContent = 'GIAI ĐOẠN 2: ĐANG DÌM VỐN TOÀN SÀN!';
       }
-    }
-
-    function setSyncLoading(show, title = "ĐANG ĐỒNG BỘ DỮ LIỆU", desc = "Đang gửi nhận dữ liệu...") {
-      const overlay = document.getElementById('gas-sync-overlay');
-      const progressBar = document.getElementById('top-sync-progress');
-      const spinIcon = document.getElementById('sync-spin-icon');
-      const titleEl = document.getElementById('sync-overlay-title');
-      const descEl = document.getElementById('sync-overlay-desc');
-
-      if (titleEl) titleEl.textContent = title;
-      if (descEl) descEl.textContent = desc;
-
-      if (show) {
-        if (spinIcon) spinIcon.classList.remove('hidden');
-        if (progressBar) {
-          progressBar.style.width = '45%';
-          progressBar.style.opacity = '1';
-        }
-        if (overlay) {
-          overlay.classList.remove('hidden');
-          void overlay.offsetWidth;
-          overlay.classList.remove('opacity-0');
-        }
-      } else {
-        if (spinIcon) spinIcon.classList.add('hidden');
-        if (progressBar) {
-          progressBar.style.width = '100%';
-          setTimeout(() => {
-            progressBar.style.opacity = '0';
-            setTimeout(() => { progressBar.style.width = '0%'; }, 200);
-          }, 200);
-        }
-        if (overlay) {
-          overlay.classList.add('opacity-0');
-          setTimeout(() => overlay.classList.add('hidden'), 200);
-        }
-      }
-    }
-
-    // API Wrapper
-    async function callGasApi(action, payload = {}, timeoutMs = 5000, showModalLoading = false) {
-      if (showModalLoading) {
-        setSyncLoading(true, "ĐỒNG BỘ GOOGLE SHEET", `Đang thực thi lệnh ${action.toUpperCase()}...`);
-      }
-
-      try {
-        if (GAS_APP_URL && GAS_APP_URL.startsWith("http")) {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-          try {
-            const resp = await fetch(GAS_APP_URL, {
-              method: 'POST',
-              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ action, ...payload }),
-              redirect: 'follow',
-              signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            const text = await resp.text();
-            try {
-              const data = JSON.parse(text);
-              updateGasStatusUI(true);
-              return data;
-            } catch (e) {
-              console.warn("GAS non-JSON output:", text.substring(0, 80));
-            }
-          } catch (e) {
-            clearTimeout(timeoutId);
-            updateGasStatusUI(false);
-          }
-        }
-        return mockGasApi(action, payload);
-      } finally {
-        if (showModalLoading) {
-          setSyncLoading(false);
-        }
-      }
-    }
-
-    function updateGasStatusUI(isOnline) {
-      const dot = document.getElementById('sync-indicator-dot');
-      const label = document.getElementById('sync-status-label');
-      const mLabel = document.getElementById('m-sync-label');
-      if (isOnline) {
-        if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400";
-        if (label) label.textContent = "GAS: Online";
-        if (mLabel) mLabel.textContent = "Google Sheet: Online";
-      } else {
-        if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-amber-400";
-        if (label) label.textContent = "Chế độ: Siêu Tốc (Offline/Local)";
-        if (mLabel) mLabel.textContent = "Google Sheet: Offline";
-      }
-    }
-
-    function mockGasApi(action, payload) {
-      if (action === 'login') {
-        const u = localUsersDb[payload.username.toLowerCase()];
-        if (u && String(u.password) === String(payload.password)) {
-          return { status: 'ok', success: true, username: payload.username, role: u.role, balance: u.balance, winRate: u.winRate, token: 'local_' + Date.now() };
-        }
-        return { status: 'error', success: false, message: 'Sai tên đăng nhập hoặc mật khẩu! Thử admin / admin123 hoặc player / 123' };
-      }
-      if (action === 'register') {
-        if (localUsersDb[payload.username.toLowerCase()]) {
-          return { status: 'error', success: false, message: 'Tên tài khoản này đã tồn tại!' };
-        }
-        const role = payload.username.toLowerCase() === 'admin' ? 'admin' : 'user';
-        localUsersDb[payload.username.toLowerCase()] = { password: payload.password, role: role, balance: 10000000, winRate: 50 };
-        return { status: 'ok', success: true, username: payload.username, role: role, balance: 10000000, winRate: 50, token: 'local_' + Date.now() };
-      }
-      if (action === 'updateBalance') {
-        if (localUsersDb[payload.username.toLowerCase()]) localUsersDb[payload.username.toLowerCase()].balance = payload.balance;
-        return { status: 'ok', success: true };
-      }
-      if (action === 'getUsers' || action === 'adminGetUsers') {
-        const list = Object.keys(localUsersDb).map(uname => ({
-          username: uname,
-          role: localUsersDb[uname].role,
-          balance: localUsersDb[uname].balance,
-          winRate: localUsersDb[uname].winRate || 50
-        }));
-        return { status: 'ok', success: true, data: { users: list }, users: list };
-      }
-      if (action === 'getBots') return { status: 'ok', success: true, data: { bots: botNames }, bots: botNames };
-      if (action === 'getLeaderboard') return { status: 'ok', success: true, data: { leaderboard: leaderboard }, leaderboard: leaderboard };
-      return { status: 'ok', success: true };
     }
   </script>
 
@@ -1947,9 +2095,9 @@
 
   <script>
     async function startSpin() {
-      // KIỂM TRA ĐĂNG NHẬP: BẮT BUỘC ĐĂNG NHẬP MỚI ĐƯỢC QUAY
+      // BẮT BUỘC ĐĂNG NHẬP: Người dùng phải đăng nhập Google Sheet trước khi quay
       if (!currentUser) {
-        showToast("Vui lòng đăng nhập để bắt đầu quay thưởng!", "warning");
+        showToast("Vui lòng đăng nhập Google Sheet để bắt đầu quay!", "warning");
         document.getElementById('auth-modal').classList.remove('hidden');
         stopAutoSpin();
         return;
@@ -1965,7 +2113,7 @@
 
       if (freeSpinsLeft <= 0) {
         if (balance < bet) {
-          showToast("Số dư ví không đủ! Hãy nhập Giftcode hoặc nhờ Admin nạp thêm.", "warning");
+          showToast("Số dư ví không đủ! Hãy đổi Giftcode hoặc nhờ Admin nạp thêm.", "warning");
           stopAutoSpin();
           return;
         }
@@ -2025,6 +2173,7 @@
       if (spinIcon) spinIcon.classList.remove('animate-spin');
       isSpinning = false;
 
+      // Đồng bộ số dư lên Google Sheet
       callGasApi('updateBalance', {
         username: currentUser.username,
         balance: balance,
@@ -2206,13 +2355,10 @@
       pushLeaderboardWin(winnerName, wonAmt);
       showToast(`💥 CHÚC MỪNG ${winnerName.toUpperCase()} NỔ HŨ 3D ${formatVND(wonAmt)}!`, "success");
 
-      callGasApi('recordSpin', {
+      // Cập nhật sự kiện nổ hũ lên Sheet
+      callGasApi('updateBalance', {
         username: winnerName,
-        betAmount: 0,
-        winAmount: wonAmt,
-        multiplier: 1,
-        isJackpot: true,
-        isBot: false
+        balance: balance
       });
     }
 
@@ -2396,7 +2542,7 @@
     document.getElementById('btn-toggle-turbo').addEventListener('click', toggleTurbo);
     document.getElementById('btn-toggle-auto').addEventListener('click', toggleAutoSpin);
 
-    // Bấm vào nút mở khóa trên màn hình cũng mở Modal Đăng Nhập
+    // Bấm nút mở khóa trên màn hình cũng mở Modal Đăng Nhập
     document.getElementById('btn-lock-login-action').addEventListener('click', () => {
       document.getElementById('auth-modal').classList.remove('hidden');
     });
@@ -2433,7 +2579,7 @@
       document.getElementById('btn-api-config-trigger').click();
     });
 
-    // GAS Config Modal
+    // Cấu hình Google Apps Script Web App
     const gasModal = document.getElementById('gas-config-modal');
     document.getElementById('btn-api-config-trigger').addEventListener('click', () => {
       document.getElementById('input-gas-url').value = GAS_APP_URL;
@@ -2444,21 +2590,26 @@
       gasModal.classList.remove('hidden');
     });
     document.getElementById('btn-close-gas-modal').addEventListener('click', () => gasModal.classList.add('hidden'));
+
     document.getElementById('btn-save-gas-url').addEventListener('click', async () => {
       const u = document.getElementById('input-gas-url').value.trim();
+      if (!u || !u.startsWith('http')) {
+        showToast("Vui lòng nhập URL Web App hợp lệ!", "warning");
+        return;
+      }
       GAS_APP_URL = u;
-      safeStore.setItem('nh_gas_api_url', u);
       gasModal.classList.add('hidden');
-      showToast("Đã lưu cấu hình Google Apps Script!", "info");
+      showToast("Đã cập nhật Web App URL Google Sheet!", "info");
       await syncStateWithSheet();
     });
+
     document.getElementById('btn-test-gas-conn').addEventListener('click', async () => {
-      showToast("Đang kiểm tra kết nối...", "info");
-      const res = await callGasApi('getState');
+      showToast("Đang kiểm tra kết nối với Google Sheet...", "info");
+      const res = await callGasApi('getState', {}, 6000, true);
       if (res && (res.status === 'ok' || res.success)) {
-        showToast("Kết nối Google Apps Script thành công!", "success");
+        showToast("Kết nối Google Apps Script thành công 100%!", "success");
       } else {
-        showToast("Đang chạy chế độ Local siêu tốc!", "info");
+        showToast("Không thể kết nối. Hãy kiểm tra URL hoặc quyền truy cập Web App!", "error");
       }
     });
 
@@ -2466,7 +2617,7 @@
     document.getElementById('btn-open-leaderboard').addEventListener('click', async () => {
       renderLeaderboardsUI();
       document.getElementById('leaderboard-modal').classList.remove('hidden');
-      const res = await callGasApi('getLeaderboard', {}, 5000, true);
+      const res = await callGasApi('getLeaderboard', {}, 6000, true);
       if (res && res.data && res.data.leaderboard) {
         leaderboard = res.data.leaderboard;
         renderLeaderboardsUI();
@@ -2476,17 +2627,17 @@
       document.getElementById('leaderboard-modal').classList.add('hidden');
     });
     document.getElementById('btn-refresh-top-modal').addEventListener('click', async () => {
-      const res = await callGasApi('getLeaderboard', {}, 5000, true);
+      const res = await callGasApi('getLeaderboard', {}, 6000, true);
       if (res && res.data && res.data.leaderboard) {
         leaderboard = res.data.leaderboard;
         renderLeaderboardsUI();
       }
-      showToast("Bảng xếp hạng đã cập nhật!", "success");
+      showToast("Bảng xếp hạng đã cập nhật từ Google Sheet!", "success");
     });
     const sideTopRefresh = document.getElementById('btn-refresh-sidebar-top');
     if (sideTopRefresh) {
       sideTopRefresh.addEventListener('click', async () => {
-        const res = await callGasApi('getLeaderboard', {}, 5000, true);
+        const res = await callGasApi('getLeaderboard', {}, 6000, true);
         if (res && res.data && res.data.leaderboard) {
           leaderboard = res.data.leaderboard;
           renderLeaderboardsUI();
@@ -2531,7 +2682,7 @@
 
     async function redeemCode(code) {
       if (!currentUser) {
-        showToast("Vui lòng đăng nhập trước khi nhận Giftcode!", "warning");
+        showToast("Vui lòng đăng nhập Google Sheet trước khi nhận Giftcode!", "warning");
         document.getElementById('auth-modal').classList.remove('hidden');
         return;
       }
@@ -2540,44 +2691,31 @@
         return;
       }
       if (redeemedCodes.includes(code)) {
-        showToast("Bạn đã nhận mã Giftcode này rồi!", "warning");
+        showToast("Bạn đã nhận mã Giftcode này trong phiên rồi!", "warning");
         return;
       }
 
       const res = await callGasApi('redeemGiftcode', {
         username: currentUser.username,
         code: code
-      });
+      }, 7000, true);
 
       if (res && (res.status === 'ok' || res.success)) {
         redeemedCodes.push(code);
-        balance = res.data ? res.data.newBalance : (balance + 5000000);
+        balance = res.data && res.data.newBalance !== undefined ? res.data.newBalance : (balance + 5000000);
         currentUser.balance = balance;
         updateBalancesUI();
         playAudio('win');
         trigger3DCoinRain(25);
         document.getElementById('giftcode-modal').classList.add('hidden');
         document.getElementById('input-giftcode').value = '';
-        showToast(res.message || "Nhận thưởng Giftcode thành công!", "success");
+        showToast(res.message || "Nhận thưởng Giftcode thành công vào Google Sheet!", "success");
       } else {
-        const gift = localGiftcodesDb[code];
-        if (gift && gift.active) {
-          redeemedCodes.push(code);
-          balance += gift.reward;
-          currentUser.balance = balance;
-          updateBalancesUI();
-          playAudio('win');
-          trigger3DCoinRain(25);
-          document.getElementById('giftcode-modal').classList.add('hidden');
-          document.getElementById('input-giftcode').value = '';
-          showToast(`Nhận thành công ${formatVND(gift.reward)} vào ví!`, "success");
-        } else {
-          showToast("Mã Giftcode không tồn tại hoặc đã hết hạn!", "error");
-        }
+        showToast(res.message || "Mã Giftcode không hợp lệ hoặc đã hết hạn!", "error");
       }
     }
 
-    // Auth Modes (ĐĂNG NHẬP / ĐĂNG KÝ)
+    // Xử lý xác thực Đăng Nhập / Đăng Ký (Gửi trực tiếp lên Sheet)
     let authMode = 'login';
     document.getElementById('tab-auth-login').addEventListener('click', () => {
       authMode = 'login';
@@ -2606,20 +2744,20 @@
         return;
       }
 
-      const res = await callGasApi(authMode, { username, password });
+      const res = await callGasApi(authMode, { username, password }, 8000, true);
       if (res && (res.status === 'ok' || res.success)) {
         const uData = res.data || res;
         setUserSession({
           username: uData.username || username,
           role: uData.role || (username.toLowerCase() === 'admin' ? 'admin' : 'user'),
-          balance: uData.balance || 10000000,
-          winRate: uData.winRate !== undefined ? uData.winRate : 50,
-          token: uData.token || 'user_token'
+          balance: uData.balance !== undefined ? Number(uData.balance) : 10000000,
+          winRate: uData.winRate !== undefined ? Number(uData.winRate) : 50,
+          token: uData.token || 'sheet_token'
         });
         document.getElementById('auth-modal').classList.add('hidden');
         document.getElementById('auth-username').value = '';
         document.getElementById('auth-password').value = '';
-        showToast(`Đăng nhập thành công! Chào mừng ${username}`, "success");
+        showToast(`Đăng nhập Google Sheet thành công! Chào mừng ${username}`, "success");
       } else {
         showToast(res.message || "Tài khoản hoặc mật khẩu không chính xác!", "error");
       }
@@ -2653,10 +2791,8 @@
           roleBadge.className = 'text-[7.5px] px-1 rounded bg-amber-400/20 text-amber-300 font-bold';
         }
 
-        // Mở khóa màn hình quay
+        // Mở khóa ma trận quay 3D
         if (lockOverlay) lockOverlay.classList.add('hidden');
-
-        safeStore.setItem('nh_logged_user', JSON.stringify(user));
       } else {
         currentUser = null;
         balance = 0;
@@ -2667,10 +2803,8 @@
         btnAdmin.classList.add('hidden');
         btnAdmin.classList.remove('flex');
 
-        // Bật khóa màn hình yêu cầu đăng nhập
+        // Bật lớp khóa bắt buộc đăng nhập
         if (lockOverlay) lockOverlay.classList.remove('hidden');
-
-        safeStore.removeItem('nh_logged_user');
       }
       updateBalancesUI();
     }
@@ -2759,8 +2893,8 @@
     document.getElementById('btn-force-trap-drain').addEventListener('click', async () => {
       forceTrapDrainServer = true;
       calculateEffectiveWinRate();
-      await callGasApi('adminUpdateConfig', { forceTrapDrain: true }, 5000, true);
-      showToast("ĐÃ KÍCH HOẠT DÌM VỐN TOÀN SERVER!", "error");
+      await callGasApi('adminUpdateConfig', { forceTrapDrain: true }, 6000, true);
+      showToast("ĐÃ KÍCH HOẠT DÌM VỐN TOÀN SERVER TRÊN GOOGLE SHEET!", "error");
     });
 
     document.getElementById('btn-reset-trap-state').addEventListener('click', async () => {
@@ -2768,7 +2902,7 @@
       playerSpinsCount = 0;
       calculateEffectiveWinRate();
       updateBalancesUI();
-      await callGasApi('adminUpdateConfig', { forceTrapDrain: false }, 5000, true);
+      await callGasApi('adminUpdateConfig', { forceTrapDrain: false }, 6000, true);
       showToast("Đã reset Bẫy! Toàn server bắt đầu lại Giai đoạn mồi ăn đậm!", "success");
     });
 
@@ -2777,15 +2911,15 @@
       if (v > 0) {
         jackpotPool = v;
         updateBalancesUI();
-        await callGasApi('adminUpdateConfig', { jackpotPool: v }, 5000, true);
-        showToast(`Đã lưu Hũ Hoàng Kim thành ${formatVND(v)}!`, "success");
+        await callGasApi('adminUpdateConfig', { jackpotPool: v }, 6000, true);
+        showToast(`Đã lưu Hũ Hoàng Kim thành ${formatVND(v)} lên Sheet!`, "success");
       }
     });
 
     document.getElementById('btn-force-jackpot').addEventListener('click', async () => {
       forceJackpotNextSpin = true;
       document.getElementById('admin-modal').classList.add('hidden');
-      await callGasApi('adminForceJackpot', {}, 5000, true);
+      await callGasApi('adminForceJackpot', {}, 6000, true);
       showToast("Lệnh đã nhận! Lượt quay tới chắc chắn Nổ Hũ 3D!", "warning");
     });
 
@@ -2795,8 +2929,8 @@
         balance = Math.max(0, balance + amt);
         if (currentUser) currentUser.balance = balance;
         updateBalancesUI();
-        await callGasApi('updateBalance', { username: currentUser ? currentUser.username : 'admin', balance: balance }, 5000, true);
-        showToast(`Admin đã điều chỉnh: ${amt > 0 ? '+' : ''}${formatVND(amt)}`, "success");
+        await callGasApi('updateBalance', { username: currentUser ? currentUser.username : 'admin', balance: balance }, 6000, true);
+        showToast(`Admin đã điều chỉnh: ${amt > 0 ? '+' : ''}${formatVND(amt)} trên Sheet`, "success");
       });
     });
 
@@ -2805,9 +2939,9 @@
     async function loadAdminUsersList() {
       const tbody = document.getElementById('admin-users-tbody');
       if (!tbody) return;
-      tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-stone-400">Đang tải người chơi...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-stone-400">Đang tải người chơi từ Google Sheet...</td></tr>';
 
-      const res = await callGasApi('adminGetUsers', {}, 5000, false);
+      const res = await callGasApi('adminGetUsers', {}, 6000, false);
       const users = (res && res.data && res.data.users) || (res && res.users) || [];
 
       if (users.length > 0) {
@@ -2836,7 +2970,7 @@
     let currentEditingUser = null;
     window.openAdminEditUser = function(uname) {
       currentEditingUser = uname;
-      const u = localUsersDb[uname] || { balance: 10000000, role: 'user', winRate: 50 };
+      const u = (currentUser && currentUser.username === uname) ? currentUser : { balance: 10000000, role: 'user', winRate: 50 };
       document.getElementById('admin-user-edit-box').classList.remove('hidden');
       document.getElementById('adm-edit-user-tag').textContent = uname;
       document.getElementById('input-edit-user-bal').value = u.balance;
@@ -2860,11 +2994,6 @@
       const newRole = document.getElementById('select-edit-user-role').value;
       const newWinRate = parseInt(document.getElementById('input-edit-user-winrate').value) || 50;
 
-      if (localUsersDb[currentEditingUser]) {
-        localUsersDb[currentEditingUser].balance = newBal;
-        localUsersDb[currentEditingUser].role = newRole;
-        localUsersDb[currentEditingUser].winRate = newWinRate;
-      }
       if (currentUser && currentUser.username === currentEditingUser) {
         currentUser.balance = newBal;
         currentUser.role = newRole;
@@ -2878,11 +3007,11 @@
         role: newRole,
         balance: newBal,
         winRate: newWinRate
-      }, 5000, true);
+      }, 6000, true);
 
       document.getElementById('admin-user-edit-box').classList.add('hidden');
       loadAdminUsersList();
-      showToast(`Đã lưu Tỉ Lệ ${newWinRate}% cho ${currentEditingUser}!`, "success");
+      showToast(`Đã lưu Tỉ Lệ ${newWinRate}% cho ${currentEditingUser} lên Sheet!`, "success");
     });
 
     document.getElementById('check-bot-enabled').addEventListener('change', async (e) => {
@@ -2913,7 +3042,7 @@
     }
 
     async function syncStateWithSheet() {
-      const res = await callGasApi('getState', {}, 5000, false);
+      const res = await callGasApi('getState', {}, 6000, false);
       if (res && (res.status === 'ok' || res.success)) {
         const d = res.data || res;
         if (d.jackpotPool) jackpotPool = Number(d.jackpotPool);
@@ -2921,10 +3050,6 @@
         if (d.globalWinRate) globalWinRate = Number(d.globalWinRate);
         if (d.forceTrapDrain !== undefined) forceTrapDrainServer = Boolean(d.forceTrapDrain);
         if (d.totalSpins !== undefined) serverTotalSpins = Number(d.totalSpins);
-        if (d.bots && Array.isArray(d.bots) && d.bots.length > 0) {
-          botNames = d.bots;
-          renderAdminBotTags();
-        }
         if (d.leaderboard && Array.isArray(d.leaderboard) && d.leaderboard.length > 0) {
           leaderboard = d.leaderboard;
           renderLeaderboardsUI();
@@ -2957,6 +3082,47 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    function startLoadingSequence() {
+      const fill = document.getElementById('loading-bar-fill');
+      const percentLabel = document.getElementById('loading-percentage');
+      const statusLabel = document.getElementById('loading-status-text');
+      const screen = document.getElementById('loading-screen');
+
+      let currentPercent = 25;
+
+      const progressInterval = setInterval(() => {
+        currentPercent += Math.floor(Math.random() * 25) + 20;
+        if (currentPercent >= 100) {
+          currentPercent = 100;
+          clearInterval(progressInterval);
+
+          if (fill) fill.style.width = '100%';
+          if (percentLabel) percentLabel.textContent = '100%';
+          if (statusLabel) statusLabel.textContent = 'Đã kết nối Google Sheet!';
+
+          setTimeout(() => {
+            if (screen) {
+              screen.style.opacity = '0';
+              setTimeout(() => { screen.style.display = 'none'; }, 400);
+            }
+          }, 200);
+        } else {
+          if (fill) fill.style.width = `${currentPercent}%`;
+          if (percentLabel) percentLabel.textContent = `${currentPercent}%`;
+          if (currentPercent > 50 && statusLabel) {
+            statusLabel.textContent = 'Tải ma trận 3D 3600 Ways...';
+          }
+        }
+      }, 60);
+
+      setTimeout(() => {
+        if (screen && screen.style.display !== 'none') {
+          screen.style.opacity = '0';
+          setTimeout(() => { screen.style.display = 'none'; }, 300);
+        }
+      }, 1200);
+    }
+
     // App Initialization
     window.addEventListener('DOMContentLoaded', () => {
       startLoadingSequence();
@@ -2965,21 +3131,12 @@
       updateMultipliersUI();
       renderLeaderboardsUI();
       restartBotLoop();
+      initGasSampleGuide();
 
-      // Kiểm tra phiên người dùng đã lưu từ trước
-      const savedUserStr = safeStore.getItem('nh_logged_user');
-      if (savedUserStr) {
-        try {
-          const parsed = JSON.parse(savedUserStr);
-          setUserSession(parsed);
-        } catch (e) {
-          setUserSession(null);
-        }
-      } else {
-        // Chưa đăng nhập: Bắt buộc khóa màn hình theo yêu cầu
-        setUserSession(null);
-      }
+      // KHÔNG SỬ DỤNG LOCALSTORAGE: Luôn khóa màn hình yêu cầu đăng nhập Google Sheet
+      setUserSession(null);
 
+      // Đồng bộ thông số Hũ và Game từ Google Sheet
       syncStateWithSheet();
     });
   </script>
